@@ -1,0 +1,70 @@
+@use '/src/styles/constants/colors';
+
+$ASSET_PATH: '/assets/svgs/';
+
+.select {
+  position: relative;
+  width: fit-content;
+
+  .selected {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // width: 100%;
+    width: 135px;
+    height: 40px;
+    padding: 5px 14px;
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(209, 216, 220);
+    border-radius: 10px;
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+
+    &::after {
+      z-index: 100;
+      width: 20px;
+      height: 20px;
+      content: '';
+      background: url($ASSET_PATH + 'icon-caret-down.svg') no-repeat 0 0;
+      background-size: 20px;
+      transition: all 0.15s ease-out;
+    }
+  }
+
+  ul {
+    position: absolute;
+    top: 45px;
+    width: 100%;
+    height: 0;
+    padding-left: 0;
+    overflow-y: auto;
+    cursor: pointer;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 13%) 0 10px 20px;
+    transition: all 0.1s ease-out;
+
+    li {
+      button {
+        width: 100%;
+        padding: 12px 20px;
+      }
+
+      &:hover {
+        background-color: #f5f5f5;
+      }
+    }
+  }
+}
+
+.openSelect {
+  ul {
+    height: 126px;
+  }
+
+  .selected::after {
+    transform: rotate(180deg);
+  }
+}

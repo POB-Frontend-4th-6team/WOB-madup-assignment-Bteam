@@ -1,0 +1,30 @@
+@use '/src/styles/constants/colors';
+
+.currentStatusOfMediumContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1040px;
+  padding: 40px;
+  background-color: colors.$CONTENTS_BACKGROUND;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 10%);
+
+  .tableContent {
+    table {
+      width: 800px;
+      min-width: 100%;
+      margin-top: 40px;
+      table-layout: fixed;
+    }
+  }
+
+  .rechartsContainer {
+    .rechartsWrapper {
+      svg {
+        width: 800px;
+        height: 500px;
+      }
+    }
+  }
+}

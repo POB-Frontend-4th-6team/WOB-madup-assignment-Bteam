@@ -1,0 +1,79 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/responsive';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 203px;
+  padding: 16px;
+  background-color: #ffffff;
+  border: 1px solid rgb(206, 206, 206);
+  border-radius: 10px;
+  transition: all 0.3s ease 0s;
+
+  &:hover {
+    border: 1px solid rgb(206, 206, 206);
+  }
+
+  header {
+    padding-bottom: 20px;
+    margin: 10px 0 0;
+    border-bottom: 1px solid rgb(237, 239, 241);
+
+    h3 {
+      font-size: 16px;
+      font-weight: bold;
+      color: rgb(58, 71, 78);
+    }
+  }
+
+  dl {
+    display: flex;
+    height: 40px;
+    padding: 13px 20px;
+    border-bottom: 1px solid rgb(237, 239, 241);
+
+    dt {
+      display: flex;
+      flex: 2 2 10%;
+      align-items: center;
+      width: 65px;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgb(148, 162, 173);
+      -webkit-box-align: center;
+    }
+
+    dd {
+      display: flex;
+      flex: 3 2 0%;
+      align-items: center;
+      font-size: 12px;
+      font-weight: bold;
+      -webkit-box-align: center;
+    }
+  }
+
+  button {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 40px;
+    padding: 12px 20px;
+    margin: 15px 0 10px;
+    font-weight: bold;
+    color: rgb(58, 71, 78);
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(237, 239, 241);
+    border-radius: 10px;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+
+    &:hover {
+      color: rgb(155, 166, 172);
+    }
+  }
+}

@@ -25,3 +25,11 @@ const Num = (n: string | number, b?: number | undefined): BigNumber => {
 export const getPlus = (a: number, b: number) => {
   return Num(a).plus(b).toNumber()
 }
+
+export const getDivide = (a: number, b: number) => {
+  return Num(a).div(b).toNumber()
+}
+
+export const getMultiple = (a: number, b: number) => {
+  return Num(a).multipliedBy(b).toNumber()
+}

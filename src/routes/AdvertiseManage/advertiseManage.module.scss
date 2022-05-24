@@ -1,0 +1,53 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/responsive';
+
+$ASSET_PATH: '/assets/svgs/';
+
+.main {
+  padding: 40px;
+  margin: 50px;
+  margin-top: 40px;
+  overflow: scroll;
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 5%) 0 4px 10px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 40px;
+  -webkit-box-align: center;
+  -webkit-box-pack: justify;
+
+  .headerButton {
+    padding: 10px 20px;
+    color: colors.$WHITE;
+    background-color: #586cf5;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: #6f82fa;
+    }
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-gap: 10px;
+
+  @include responsive.after(ML) {
+    grid-gap: 30px;
+  }
+
+  @include responsive.after(SD) {
+    grid-gap: 30px;
+  }
+
+  @include responsive.after(LD) {
+    grid-gap: 20px;
+  }
+}
