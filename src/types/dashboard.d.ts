@@ -5,6 +5,7 @@ export interface IDailyData {
   conv: number
   convValue: number
   ctr: number
+  cvr: number
   cpc: number
   cpa: number
   roas: number

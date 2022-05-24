@@ -8,6 +8,7 @@ import { byChannelDataResultState, byChannelFetchState, dailyDataResultState, da
 
 import CalendarModal from './CalendarModal/CalendarModal'
 import AdTop from './AdTop'
+import Chart from './Chart'
 import styles from './dashboard.module.scss'
 import CurrentStatusOfMedium from './CurrentStatusOfMedium'
 
@@ -45,6 +46,7 @@ const Dashboard = () => {
       setDailyFetch(false)
     },
   })
+
   const { data: byChannelDataResult } = useQuery(
     ['getByChannelData', currentStartDate, currentEndDate],
     getByChannelData,
@@ -91,6 +93,7 @@ const Dashboard = () => {
         <h2 className={styles.adSectionTitle}>통합 광고 현황</h2>
         <div className={styles.boardWrapper}>
           <AdTop />
+          <Chart />
         </div>
       </div>
       <h2 className={styles.currentStatusOfMediumTitle}>매체 현황</h2>
