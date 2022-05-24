@@ -1,10 +1,45 @@
+@use '/src/styles/constants/colors';
+
 .headerContainer {
-  // position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  min-width: 800px;
   height: 80px;
+  margin-right: 40px;
   margin-bottom: 30px;
-  background-color: #f4bfbf;
+}
+
+.profileContainer {
+  display: flex;
+  align-items: center;
+}
+
+.notifyIcon {
+  margin-right: 30px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.settingIcon {
+  margin-right: 30px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.profileIcon {
+  margin-right: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.userName {
+  font-size: 14px;
+  color: colors.$GRAY800;
 }

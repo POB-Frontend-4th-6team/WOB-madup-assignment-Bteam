@@ -9,6 +9,7 @@ import { byChannelFetchState, dailyFetchState } from 'states/dashboard'
 import styles from './calendarModal.module.scss'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
+import { LogoIcon } from 'assets/svgs'
 
 interface IProps {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
