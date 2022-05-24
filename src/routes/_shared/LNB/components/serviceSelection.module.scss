@@ -1,0 +1,81 @@
+@use '/src/styles/constants/colors';
+
+.serviceSelection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100px;
+  margin-top: 40px;
+}
+
+.sideMenuTitle {
+  margin-top: 13px;
+  margin-left: 60px;
+  font-size: 12px;
+}
+
+.selectBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 75%;
+  height: 60px;
+  padding-right: 18px;
+  padding-left: 20px;
+  margin-top: 13px;
+  margin-left: 40px;
+  border: 1px solid #d1d8dc;
+  border-radius: 10px;
+}
+
+.selectMenuList {
+  position: absolute;
+  top: 65px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  background-color: colors.$WHITE;
+  border-radius: 10px;
+  /* stylelint-disable-next-line color-function-notation */
+  box-shadow: rgb(41 50 55 / 15%) 0 10px 20px;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 44px;
+    padding: 5px 20px;
+    // border: 1px solid black;
+    &:hover {
+      cursor: pointer;
+      background-color: #f5f5f5;
+    }
+  }
+
+  .addService {
+    color: colors.$MODAL_BUTTON_BACKGROUND;
+
+    &:hover {
+      background-color: colors.$WHITE;
+    }
+  }
+
+  .addServiceIcon {
+    width: 15px;
+    fill: colors.$MODAL_BUTTON_BACKGROUND;
+  }
+}
+
+.downArrowIcon {
+  &:hover {
+    cursor: pointer;
+  }
+  transition: transform 0.3s linear;
+  transform: rotate(0deg);
+}
+
+.selectMenuOpen {
+  transition: transform 0.3s linear;
+  transform: rotate(-180deg);
+}

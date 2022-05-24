@@ -9,6 +9,7 @@ import { byChannelFetchState, dailyFetchState } from 'states/dashboard'
 import styles from './calendarModal.module.scss'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
+import { LogoIcon } from 'assets/svgs'
 
 interface IProps {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
@@ -59,10 +60,10 @@ const CalendarModal = ({ setIsModalOpen, setCurrentStartDate, setCurrentEndDate 
         // showDateDisplay={false}
       />
       <div className={styles.buttonContainer}>
-        <button type='button' onClick={handleModalClose}>
+        <button className={styles.button} type='button' onClick={handleModalClose}>
           닫기
         </button>
-        <button type='button' onClick={handleGetData}>
+        <button className={styles.button} type='button' onClick={handleGetData}>
           적용
         </button>
       </div>

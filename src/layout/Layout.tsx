@@ -5,11 +5,11 @@ import LNB from 'routes/_shared/LNB'
 
 const Layout = () => {
   return (
-    <div>
+    <>
       <LNB />
       <Header />
       <Outlet />
-    </div>
+    </>
   )
 }
 

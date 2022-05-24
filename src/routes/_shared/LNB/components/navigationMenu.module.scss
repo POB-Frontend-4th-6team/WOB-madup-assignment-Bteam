@@ -1,0 +1,50 @@
+@use '/src/styles/constants/colors';
+
+.navigationContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
+.navigationTitle {
+  margin-top: 13px;
+  margin-left: 60px;
+  font-size: 12px;
+}
+
+.navigationList {
+  width: 75%;
+  margin-top: 13px;
+  margin-right: auto;
+  margin-left: auto;
+
+  li {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    padding-left: 20px;
+    color: colors.$GRAY800;
+    border-radius: 10px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: colors.$GRAY50;
+    }
+  }
+}
+
+.isActive {
+  svg {
+    fill: colors.$MODAL_BUTTON_BACKGROUND;
+  }
+
+  li {
+    color: colors.$MODAL_BUTTON_BACKGROUND;
+  }
+}
+
+.navigationIcon {
+  width: 24px;
+  margin-right: 10px;
+}
