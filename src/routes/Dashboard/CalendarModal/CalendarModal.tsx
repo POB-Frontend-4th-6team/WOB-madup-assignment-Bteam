@@ -59,10 +59,10 @@ const CalendarModal = ({ setIsModalOpen, setCurrentStartDate, setCurrentEndDate 
         // showDateDisplay={false}
       />
       <div className={styles.buttonContainer}>
-        <button type='button' onClick={handleModalClose}>
+        <button className={styles.button} type='button' onClick={handleModalClose}>
           닫기
         </button>
-        <button type='button' onClick={handleGetData}>
+        <button className={styles.button} type='button' onClick={handleGetData}>
           적용
         </button>
       </div>
