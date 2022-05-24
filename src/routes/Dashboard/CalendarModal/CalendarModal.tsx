@@ -58,7 +58,7 @@ const CalendarModal = ({ setIsModalOpen, setCurrentStartDate, setCurrentEndDate 
         dateDisplayFormat='yyyy년 MM월 dd일'
         // showDateDisplay={false}
       />
-      <div>
+      <div className={styles.buttonContainer}>
         <button type='button' onClick={handleModalClose}>
           닫기
         </button>
