@@ -1,12 +1,13 @@
 import { useState } from 'react'
+import store from 'store'
 
 import { useRecoilState } from 'hooks/state'
 import { dailyDataResultState } from 'states/dashboard'
-import { convertData } from './utils'
+import { convertDailyData, convertWeeklyData } from './utils'
 
 import DropDown from 'routes/_shared/DropDown'
 import ChartItem from './ChartItem'
-import styles from './chart.module.scss'
+import styles from '../adStatus.module.scss'
 
 const SELECT_LIST = ['ROAS', '광고비', '노출 수', '클릭 수', '전환 수', '매출', '없음']
 const PERIOD_SELECT_LIST = ['일간', '주간']
@@ -14,13 +15,16 @@ const PERIOD_SELECT_LIST = ['일간', '주간']
 const Chart = (): JSX.Element => {
   const [dailyData] = useRecoilState(dailyDataResultState)
 
+  const currentStartDate = store.get('startDate')
+  const currentEndDate = store.get('endDate')
+
   const [firstSelect, setFirstSelect] = useState(SELECT_LIST[0])
   const [secondSelect, setSecondSelect] = useState(SELECT_LIST[0])
   const [periodSelect, setPeriodSelect] = useState(PERIOD_SELECT_LIST[0])
 
-  const { roas, cost, imp, click, conv, sales } = convertData(dailyData)
+  const { roas, cost, imp, click, conv, sales } = convertDailyData(dailyData)
 
-  const getData = (dataKey: string) => {
+  const getDailyData = (dataKey: string) => {
     return (
       {
         ROAS: roas,
@@ -33,8 +37,38 @@ const Chart = (): JSX.Element => {
     )
   }
 
-  const firstData = getData(firstSelect)
-  const secondData = getData(secondSelect)
+  let firstData = null
+  let secondData = null
+
+  if (periodSelect === '일간') {
+    firstData = getDailyData(firstSelect)
+    secondData = getDailyData(secondSelect)
+  } else {
+    const {
+      roas: roasWeekly,
+      cost: costWeekly,
+      imp: impWeekly,
+      click: clickWeekly,
+      conv: convWeekly,
+      sales: salesWeekly,
+    } = convertWeeklyData(dailyData, currentStartDate, currentEndDate)
+
+    const getWeeklyData = (dataKey: string) => {
+      return (
+        {
+          ROAS: roasWeekly,
+          광고비: costWeekly,
+          '노출 수': impWeekly,
+          '클릭 수': clickWeekly,
+          '전환 수': convWeekly,
+          매출: salesWeekly,
+        }[dataKey] ?? null
+      )
+    }
+
+    firstData = getWeeklyData(firstSelect)
+    secondData = getWeeklyData(secondSelect)
+  }
 
   return (
     <>

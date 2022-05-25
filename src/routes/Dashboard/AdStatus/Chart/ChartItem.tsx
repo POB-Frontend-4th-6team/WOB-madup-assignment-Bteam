@@ -3,7 +3,7 @@ import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLine, VictoryTheme } fr
 import { useRecoilState } from 'hooks/state'
 import { dailyDataResultState } from 'states/dashboard'
 
-import styles from './chart.module.scss'
+import styles from '../adStatus.module.scss'
 
 type Data = {
   x: string
@@ -24,7 +24,8 @@ const ChartItem = ({ firstData, secondData }: Props): JSX.Element => {
   }
 
   const getMaxNum = (d: Data[]) => {
-    return d.reduce((max, p) => (p.y > max ? p.y : max), d[0].y)
+    if (d.length >= 1) return d.reduce((max, p) => (p.y > max ? p.y : max), d[0].y)
+    return -1
   }
 
   const maxima = (mNum: number) => {
