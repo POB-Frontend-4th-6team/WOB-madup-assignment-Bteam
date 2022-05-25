@@ -1,15 +1,25 @@
 @use '/src/styles/constants/colors';
+@use '/src/styles/mixins/responsive';
 
 .lnbContainer {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 9;
   width: 320px;
   height: 100vh;
   padding-bottom: 200px;
   overflow-y: scroll;
   background-color: colors.$WHITE;
   box-shadow: 1px 0 10px colors.$GRAYD;
+  transition: all 0.3s linear;
+  @include responsive.mobileOnly {
+    left: -320px;
+  }
+}
+
+.lnbMobileOpen {
+  left: 0 !important;
 }
 
 .logoContainer {

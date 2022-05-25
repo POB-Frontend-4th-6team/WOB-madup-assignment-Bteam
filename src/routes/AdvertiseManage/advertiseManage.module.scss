@@ -5,24 +5,26 @@
 $ASSET_PATH: '/assets/svgs/';
 
 .main {
-  padding: 10px;
-  margin: 5px;
-  margin-top: 40px;
   overflow: scroll;
-  border-radius: 20px;
 
-  @include responsive.after(MD) {
-    padding: 30px;
-    margin: 30px;
-  }
+  // @include responsive.after(MD) {
+  //   padding: 10px;
+  //   margin: 10px 30px 30px;
+  // }
 }
 
 .mainHeader {
+  display: flex;
+  align-items: center;
   width: 100%;
+  min-width: 800px;
+  height: 80px;
+  margin-right: 40px;
+  margin-left: 40px;
 
   h2 {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 26px;
+    font-weight: 900;
   }
 }
 

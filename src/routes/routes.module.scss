@@ -1,5 +1,10 @@
 @use '/src/styles/constants/colors';
+@use '/src/styles/mixins/responsive';
 
 .app {
   padding-left: 320px;
+
+  @include responsive.mobileOnly {
+    padding-left: 0;
+  }
 }
