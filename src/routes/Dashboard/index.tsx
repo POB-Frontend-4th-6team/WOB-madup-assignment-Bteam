@@ -11,6 +11,7 @@ import Chart from './Chart'
 import styles from './dashboard.module.scss'
 import CurrentStatusOfMedium from './CurrentStatusOfMedium'
 import { getDailyData, getByChannelData } from 'services/ads'
+import { DownArrow } from 'assets/svgs'
 
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -61,7 +62,8 @@ const Dashboard = () => {
         <h2>대시보드</h2>
         <div className={styles.calendarContainer}>
           <button className={styles.calendarOpenButton} type='button' onClick={handleOpenModal}>
-            {`${currentStartDate} - ${currentEndDate}`}
+            {`${currentStartDate} ~ ${currentEndDate}`}
+            <DownArrow />
           </button>
           {isModalOpen && (
             <div className={styles.calendar}>

@@ -82,6 +82,16 @@
 
 .header {
   display: flex;
+  align-items: center;
+  min-width: 800px;
+  height: 80px;
+  margin-right: 40px;
+  margin-left: 40px;
+
+  h2 {
+    font-size: 26px;
+    font-weight: 900;
+  }
 }
 
 .calendarContainer {
@@ -91,8 +101,9 @@
 }
 
 .calendarOpenButton {
+  display: flex;
+  align-items: center;
   width: 200px;
-  margin-right: 100px;
   margin-left: auto;
   border: none;
 }

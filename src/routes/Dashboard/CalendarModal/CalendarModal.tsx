@@ -10,6 +10,7 @@ import { byChannelFetchState, dailyFetchState } from 'states/dashboard'
 import styles from './calendarModal.module.scss'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
+import Button from 'components/Button'
 
 interface IProps {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
@@ -62,25 +63,46 @@ const CalendarModal = ({ setIsModalOpen }: IProps) => {
 
   return (
     <div className={styles.calendarModalContainer}>
-      <DateRange
-        editableDateInputs={false}
-        onChange={(item) => setDateRange([item.selection])}
-        ranges={dateRange}
-        locale={ko}
-        months={2}
-        direction='horizontal'
-        dateDisplayFormat='yyyy년 MM월 dd일'
-        minDate={new Date('2022-02-01')}
-        maxDate={new Date('2022-04-20')}
-        // showDateDisplay={false}
-      />
+      <section className={styles.pickedDateDisplay}>
+        {startDateTransformed} ~ {endDateTransformed}
+      </section>
+      <section className={styles.calendar}>
+        <DateRange
+          editableDateInputs={false}
+          onChange={(item) => setDateRange([item.selection])}
+          ranges={dateRange}
+          locale={ko}
+          months={2}
+          direction='horizontal'
+          dateDisplayFormat='yyyy년 MM월 dd일'
+          minDate={new Date('2022-02-01')}
+          maxDate={new Date('2022-04-20')}
+          showPreview={false}
+          showDateDisplay={false}
+          monthDisplayFormat='yyyy년 m월'
+          rangeColors={['#586cf5']}
+        />
+      </section>
+
       <div className={styles.buttonContainer}>
-        <button className={styles.button} type='button' onClick={handleModalClose}>
-          닫기
-        </button>
-        <button className={styles.button} type='button' onClick={handleGetData}>
-          적용
-        </button>
+        <Button
+          text='닫기'
+          width='100px'
+          height='40px'
+          border='1px solid #94a2ad'
+          color='black'
+          borderRadius='10px'
+          onClick={handleModalClose}
+        />
+        <Button
+          text='적용'
+          width='100px'
+          height='40px'
+          backgroundColor='#586cf5'
+          color='white'
+          borderRadius='10px'
+          onClick={handleGetData}
+        />
       </div>
     </div>
   )
