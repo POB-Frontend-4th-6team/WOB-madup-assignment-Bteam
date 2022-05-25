@@ -2,10 +2,16 @@ import { GuideIcon, LogoIcon } from 'assets/svgs'
 import styles from './lnb.module.scss'
 import ServiceSelection from './components/ServiceSelection'
 import NavigationMenu from './components/NavigationMenu'
+import { menuState } from 'states/adsItem'
+import { useRecoil } from 'hooks/state'
+import { cx } from 'styles'
+import { useOnClickOutside } from 'hooks/useOnClickOutside'
 
 const LNB = () => {
+  const [sideMenuOpen, setSideMenuopen] = useRecoil(menuState)
+  const LNBRef = useOnClickOutside(() => setSideMenuopen(false))
   return (
-    <aside className={styles.lnbContainer}>
+    <aside ref={LNBRef} className={cx(styles.lnbContainer, { [styles.lnbMobileOpen]: sideMenuOpen })}>
       <div className={styles.logoContainer}>
         <LogoIcon className={styles.logoIcon} />
       </div>
