@@ -1,5 +1,6 @@
-import { IAdsItem } from 'types/ads'
+import { IAdsItem } from 'types/advertiseManage'
 
+// TODO: 수정
 export const filterAdsItems = (item: IAdsItem, status: string) => {
   switch (status) {
     case '전체 광고':

@@ -1,8 +1,7 @@
 import dayjs from 'dayjs'
 import { MouseEvent } from 'react'
-import { IAdsItem } from 'types/ads'
-import { getDivide, getMultiple } from 'utils/num'
-import { convertCurrencyUnits } from '../utils/convertCurrencyUnits'
+import { IAdsItem } from 'types/advertiseManage'
+import { convertCurrencyUnits } from './convertCurrencyUnits'
 import styles from './contentCard.module.scss'
 
 interface IContentCardProps {
@@ -20,15 +19,13 @@ const ContentCard = ({ adsItem, handleOpenModal }: IContentCardProps): JSX.Eleme
   const adsCreatedAt = endDate ? `${startDate} (${endDate})` : startDate
 
   const adsBudget = convertCurrencyUnits(adsItem.budget).toLocaleString()
-  const adsRoas = adsItem.report.roas
-
+  const adsRoas = adsItem.report.roas.toLocaleString()
   // roas * 광고비 / 100
-  let tempAdsSales = getMultiple(adsItem.report.roas, adsItem.report.cost)
-  tempAdsSales = getDivide(tempAdsSales, 100)
-  const adsSales = convertCurrencyUnits(tempAdsSales)
+  const tempAdsSales = (adsItem.report.roas * adsItem.report.cost) / 100
+  const adsSales = convertCurrencyUnits(tempAdsSales) ?? 0
   // /const adsSales = tempAdsSales.toLocaleString()
 
-  const adsCost = convertCurrencyUnits(adsItem.report.cost)
+  const adsCost = convertCurrencyUnits(adsItem.report.cost) ?? 0
 
   // TODO: 단위 맞음?
   return (
@@ -37,28 +34,30 @@ const ContentCard = ({ adsItem, handleOpenModal }: IContentCardProps): JSX.Eleme
         <h3>{adsTitle}</h3>
       </header>
       <dl>
-        <dt>상태</dt>
-        <dd>{adsStatus}</dd>
-      </dl>
-      <dl>
-        <dt>광고 생성일</dt>
-        <dd>{adsCreatedAt}</dd>
-      </dl>
-      <dl>
-        <dt>일 희망 예산</dt>
-        <dd>{adsBudget}</dd>
-      </dl>
-      <dl>
-        <dt>광고 수익률</dt>
-        <dd>{adsRoas}%</dd>
-      </dl>
-      <dl>
-        <dt>매출</dt>
-        <dd>{adsSales}</dd>
-      </dl>
-      <dl>
-        <dt>광고 비용</dt>
-        <dd>{adsCost}</dd>
+        <div>
+          <dt>상태</dt>
+          <dd>{adsStatus}</dd>
+        </div>
+        <div>
+          <dt>광고 생성일</dt>
+          <dd>{adsCreatedAt}</dd>
+        </div>
+        <div>
+          <dt>일 희망 예산</dt>
+          <dd>{adsBudget}</dd>
+        </div>
+        <div>
+          <dt>광고 수익률</dt>
+          <dd>{adsRoas}%</dd>
+        </div>
+        <div>
+          <dt>매출</dt>
+          <dd>{adsSales}</dd>
+        </div>
+        <div>
+          <dt>광고 비용</dt>
+          <dd>{adsCost}</dd>
+        </div>
       </dl>
       <button type='button' data-item={JSON.stringify(adsItem)} onClick={handleOpenModal}>
         수정하기

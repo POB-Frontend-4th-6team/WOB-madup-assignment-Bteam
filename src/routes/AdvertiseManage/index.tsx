@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import store from 'store'
 import _ from 'lodash'
 
-import { IAdsItem } from 'types/ads'
+import { IAdsItem } from 'types/advertiseManage'
 import { useRecoil } from 'hooks/state'
 import { adsListState } from 'states/adsItem'
 import { getAdsItemList } from 'services/ads'
@@ -49,13 +49,15 @@ const AdvertiseManage = (): JSX.Element => {
     if (data && data.length > 0) {
       // TODO: 여기서 store?
       const adsLocalList = store.get('ads_list')
-
-      if (adsLocalList.length > 0) {
+      if (adsLocalList?.length > 0) {
         let tempAds = adsLocalList.concat(data)
         tempAds = _.uniqBy(tempAds, 'id')
         store.set('ads_list', tempAds)
         setAdsList(tempAds)
+        return
       }
+
+      store.set('ads_list', data)
       setAdsList(data)
     }
   }, [data, setAdsList])
@@ -69,33 +71,39 @@ const AdvertiseManage = (): JSX.Element => {
   }
 
   return (
-    <Container>
+    <main className={styles.main}>
       <header className={styles.mainHeader}>
-        <DropDown
-          size='medium'
-          selectList={SELECT_LIST}
-          setCurrentSelect={setCurrentSelect}
-          currentSelect={currentSelect}
-        />
-
-        <button type='button' className={styles.headerButton} onClick={handleOpenModal}>
-          광고 만들기
-        </button>
+        <h2>광고관리</h2>
       </header>
+      <Container>
+        <header className={styles.containerHeader}>
+          <DropDown
+            size='medium'
+            selectList={SELECT_LIST}
+            setCurrentSelect={setCurrentSelect}
+            currentSelect={currentSelect}
+          />
 
-      {isLoading && <Loading />}
-      <div className={styles.cards}>
-        {adsList
-          .filter((value) => filterAdsItems(value, currentSelect))
-          .map((value) => {
-            return <ContentCard key={value.id} adsItem={value} handleOpenModal={handleOpenModal} />
-          })}
-      </div>
+          <button type='button' className={styles.headerButton} onClick={handleOpenModal}>
+            광고 만들기
+          </button>
+        </header>
 
-      {visibleModal && (
-        <AdvertiseModal openModal={visibleModal} selectedAdItem={selectedAdItem} setVisibleModal={setVisibleModal} />
-      )}
-    </Container>
+        {isLoading && <Loading />}
+        <div className={styles.cards}>
+          {adsList
+            .filter((value) => filterAdsItems(value, currentSelect))
+            .sort((a, b) => b.id - a.id)
+            .map((value) => {
+              return <ContentCard key={value.id} adsItem={value} handleOpenModal={handleOpenModal} />
+            })}
+        </div>
+
+        {visibleModal && (
+          <AdvertiseModal openModal={visibleModal} selectedAdItem={selectedAdItem} setVisibleModal={setVisibleModal} />
+        )}
+      </Container>
+    </main>
   )
 }
 

@@ -1,5 +1,5 @@
-@use 'styles/constants/colors';
-@use 'styles/mixins/animation';
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/animation';
 
 .backDropButton {
   position: absolute;
@@ -31,7 +31,6 @@
   color: colors.$BLACK;
   background-color: colors.$GRAYE;
   border-radius: 5px;
-  // box-shadow: 0 0 10px 0 colors.$WHITE;
   transform: translate(-50%, -50%);
   animation: openModal 0.3s linear;
 }

@@ -1,12 +1,17 @@
-import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from 'react'
+import { Dispatch, FormEvent, SetStateAction } from 'react'
 
-import { IAdsItem } from 'types/ads'
+import { IAdsItem } from 'types/advertiseManage'
 import useFormInput from './useFormInput'
 import { CloseIcon, InputCancelIcon } from 'assets/svgs/index'
 
 import Modal from '..'
 import { cx } from 'styles'
 import styles from './advertiseModal.module.scss'
+import dayjs from 'dayjs'
+import { updateAdvertiseList } from './updateAdvertiseList'
+import { validateBudget, validateTitle } from './validateState'
+import { useRecoil } from 'hooks/state'
+import { adsListState } from 'states/adsItem'
 
 interface IAdsModalProps {
   selectedAdItem: IAdsItem | null
@@ -14,43 +19,58 @@ interface IAdsModalProps {
   setVisibleModal: Dispatch<SetStateAction<boolean>>
 }
 
-// TODO: 분리
-function validateTitle(value: string) {
-  return value.length > 4
-}
-
 const AdvertiseModal = ({ selectedAdItem, setVisibleModal, openModal }: IAdsModalProps): JSX.Element => {
+  const [advertiseList, setAdvertiseList] = useRecoil(adsListState)
   const {
-    value: adsType,
-    setValue: setAdsType,
+    value: adType,
+    reset: resetAdType,
     valueClickHandler: typeClickHandler,
   } = useFormInput({ initialValue: selectedAdItem?.adType ?? 'web' })
 
   const {
     value: title,
     hasError: titleHasError,
-    setValue: setTitle,
+    reset: resetTitle,
+    valueIsValid: titleIsValid,
     valueChangeHandler: titleChangeHandler,
     inputBlurHandler: handleTitleBlur,
   } = useFormInput({ validateFunction: validateTitle, initialValue: selectedAdItem?.title ?? '' })
 
-  // TODO: TEXT로 변경
-  const [budget, setBudget] = useState(Number(selectedAdItem?.budget ?? ''))
-  const handleChangeBudget = (e: ChangeEvent<HTMLInputElement>) => {
-    setBudget(Number(e.currentTarget.value))
-  }
+  const {
+    value: budget,
+    hasError: budgetIsError,
+    reset: resetBudget,
+    valueIsValid: budgetIsValid,
+    valueChangeHandler: handleBudgetChange,
+    inputBlurHandler: handleBudgetBlur,
+  } = useFormInput({ validateFunction: validateBudget, initialValue: selectedAdItem?.budget.toString() || '' })
 
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault()
-    // console.log(e.currentTarget)
-    // console.log(title)
+    if (!titleIsValid || !budgetIsValid) return
+
+    const tempAdItem = {
+      id: selectedAdItem?.id ? selectedAdItem?.id : advertiseList[advertiseList.length - 1].id + 1,
+      adType,
+      title,
+      budget: Number(budget),
+      status: selectedAdItem?.status ? selectedAdItem?.status : 'active',
+      startDate: dayjs(new Date()).toString(),
+      endDate: null,
+      report: { cost: 0, convValue: 0, roas: 0 },
+    }
+
+    setAdvertiseList((prev) => {
+      const newList = updateAdvertiseList({ prevList: prev, tempAdItem })
+      return newList
+    })
     setVisibleModal(false)
   }
 
   const onCancel = () => {
-    setAdsType('web')
-    setTitle('')
-    setBudget(0)
+    resetAdType()
+    resetTitle()
+    resetBudget()
     setVisibleModal(false)
   }
 
@@ -66,6 +86,7 @@ const AdvertiseModal = ({ selectedAdItem, setVisibleModal, openModal }: IAdsModa
       <div className={styles.content}>
         <form onSubmit={handleOnSubmit}>
           <div className={styles.inputForm}>
+            {/* // TODO: feild */}
             <legend>광고 유형</legend>
             <div className={styles.inputRadio}>
               <input
@@ -73,8 +94,8 @@ const AdvertiseModal = ({ selectedAdItem, setVisibleModal, openModal }: IAdsModa
                 id='type1'
                 name='type'
                 className={styles.radioInput}
-                value={1}
-                defaultChecked={adsType === 'web'}
+                value='web'
+                defaultChecked={adType === 'web'}
                 onClick={typeClickHandler}
               />
               <label htmlFor='type1' className={styles.radioLabel}>
@@ -85,8 +106,8 @@ const AdvertiseModal = ({ selectedAdItem, setVisibleModal, openModal }: IAdsModa
                 id='type2'
                 name='type'
                 className={styles.radioInput}
-                value={2}
-                defaultChecked={!adsType}
+                value='app'
+                defaultChecked={adType === 'app'}
                 onClick={typeClickHandler}
               />
               <label htmlFor='type2' className={styles.radioLabel}>
@@ -118,10 +139,12 @@ const AdvertiseModal = ({ selectedAdItem, setVisibleModal, openModal }: IAdsModa
               name='budget'
               placeholder='0'
               value={budget}
-              onChange={handleChangeBudget}
+              onBlur={handleBudgetBlur}
+              onChange={handleBudgetChange}
               className={styles.budgetInput}
             />
-            <InputCancelIcon className={cx({ [styles.iconHidden]: budget <= 0 })} />
+            <InputCancelIcon className={cx({ [styles.iconHidden]: budget === '' })} />
+            {budgetIsError && <p className={styles.errorMessage}>10 이상의 숫자만 입력하세요.</p>}
           </div>
 
           <footer className={styles.footer}>
