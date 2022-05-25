@@ -1,29 +1,87 @@
 @use '/src/styles/constants/colors';
 
 .currentStatusOfMediumContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 1040px;
   padding: 40px;
+  margin: 0 40px 40px;
   background-color: colors.$CONTENTS_BACKGROUND;
   border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 10%);
 
   .tableContent {
+    overflow: auto hidden;
+    font-size: 12px;
+
     table {
-      width: 800px;
+      width: 100%;
       min-width: 100%;
-      margin-top: 40px;
+      margin-top: 60px;
+      text-align: center;
       table-layout: fixed;
+
+      .tableThead {
+        tr > th {
+          padding: 20px 8px;
+          font-weight: 500;
+          line-height: 20px;
+          color: rgb(148, 162, 173);
+          border-top: 1px solid rgb(237, 239, 241);
+          border-bottom: 1px solid rgb(237, 239, 241);
+        }
+
+        tr > th:first-child {
+          margin-left: 40px;
+        }
+      }
+
+      .tableTbody {
+        tr > td {
+          height: 40px;
+          font-weight: 500;
+          line-height: 40px;
+          color: rgb(58, 71, 78);
+          border-bottom: 1px solid rgb(237, 239, 241);
+
+          .tableCellContent {
+            font-weight: 600;
+            color: rgb(58, 71, 78);
+            background-color: #ffffff;
+          }
+        }
+      }
+
+      .tableSummary {
+        tr > td {
+          height: 40px;
+          font-weight: 500;
+          line-height: 40px;
+          color: rgb(88, 108, 245);
+          border-bottom: 1px solid rgb(237, 239, 241);
+        }
+      }
     }
   }
 
-  .rechartsContainer {
-    .rechartsWrapper {
-      svg {
-        width: 800px;
-        height: 500px;
+  .rechartsWrapper {
+    .rechartsLegendWrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin: 0 45px 0 30px;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgb(148, 162, 173);
+
+      .textWrapper {
+        display: flex;
+        align-items: center;
+
+        .circle {
+          width: 10px;
+          height: 10px;
+          margin-right: 20px;
+          margin-left: 40px;
+          border-radius: 50%;
+        }
       }
     }
   }

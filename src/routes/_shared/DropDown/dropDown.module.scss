@@ -4,15 +4,12 @@ $ASSET_PATH: '/assets/svgs/';
 
 .select {
   position: relative;
-  width: fit-content;
 
   .selected {
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // width: 100%;
-    width: 135px;
     height: 40px;
     padding: 5px 14px;
     cursor: pointer;
@@ -21,16 +18,6 @@ $ASSET_PATH: '/assets/svgs/';
     border-radius: 10px;
     -webkit-box-pack: justify;
     -webkit-box-align: center;
-
-    &::after {
-      z-index: 100;
-      width: 20px;
-      height: 20px;
-      content: '';
-      background: url($ASSET_PATH + 'icon-caret-down.svg') no-repeat 0 0;
-      background-size: 20px;
-      transition: all 0.15s ease-out;
-    }
   }
 
   ul {
@@ -59,12 +46,47 @@ $ASSET_PATH: '/assets/svgs/';
   }
 }
 
-.openSelect {
+.downArrowIcon {
+  &:hover {
+    cursor: pointer;
+  }
+  transition: transform 0.3s linear;
+  transform: rotate(0deg);
+}
+
+.selectMenuOpen {
+  transition: transform 0.3s linear;
+  transform: rotate(-180deg);
+}
+
+.isOpenSelect {
   ul {
     height: 126px;
   }
 
   .selected::after {
     transform: rotate(180deg);
+  }
+}
+
+.large {
+  width: 220px;
+  height: 60px;
+
+  > button {
+    height: 60px !important;
+    padding: 15px;
+  }
+}
+
+.medium {
+  width: 135px;
+}
+
+.small {
+  width: 110px;
+
+  > button {
+    padding: 8px !important;
   }
 }

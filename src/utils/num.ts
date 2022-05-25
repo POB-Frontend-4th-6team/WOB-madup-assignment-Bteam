@@ -33,3 +33,11 @@ export const getDivide = (a: number, b: number) => {
 export const getMultiple = (a: number, b: number) => {
   return Num(a).multipliedBy(b).toNumber()
 }
+
+export const roundToTwo = (num: number): number => {
+  return Math.round(num * 100) / 100
+}
+
+export const fomatting = (original: number): string => {
+  return String(original).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}

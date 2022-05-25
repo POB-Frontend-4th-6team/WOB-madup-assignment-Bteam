@@ -1,30 +1,33 @@
+import { DownArrow } from 'assets/svgs'
 import { Dispatch, MouseEvent, SetStateAction, useState } from 'react'
 import { cx } from 'styles'
-import styles from './selectBox.module.scss'
+import styles from './dropDown.module.scss'
 
-interface ISelectBoxProps {
+interface IDropDownProps {
   selectList: string[]
   currentSelect: string
   setCurrentSelect: Dispatch<SetStateAction<string>>
+  size: 'large' | 'medium' | 'small'
 }
 
-const SelectBox = ({ selectList, currentSelect, setCurrentSelect }: ISelectBoxProps): JSX.Element => {
-  const [openSelect, setOpenSelect] = useState(false)
+const DropDown = ({ selectList, currentSelect, setCurrentSelect, size }: IDropDownProps): JSX.Element => {
+  const [isOpenSelect, setIsOpenSelect] = useState(false)
 
   const handleVisibleOptions = () => {
-    setOpenSelect((prev) => !prev)
+    setIsOpenSelect((prev) => !prev)
   }
 
   const handleListClick = (e: MouseEvent<HTMLButtonElement>) => {
     const selectedValue = e.currentTarget.dataset.value
     setCurrentSelect(selectedValue ?? selectList[0])
-    setOpenSelect(false)
+    setIsOpenSelect(false)
   }
 
   return (
-    <div className={cx(styles.select, { [styles.openSelect]: openSelect })}>
-      <button type='button' className={styles.selected} onClick={handleVisibleOptions}>
-        <div className={styles.selectedValue}>{currentSelect}</div>
+    <div className={cx(styles.select, styles[size], { [styles.isOpenSelect]: isOpenSelect })}>
+      <button type='button' className={cx(styles.selected, styles[size])} onClick={handleVisibleOptions}>
+        {currentSelect}
+        <DownArrow className={cx(styles.downArrowIcon, { [styles.selectMenuOpen]: isOpenSelect })} />
       </button>
       <ul>
         {selectList.map((value) => {
@@ -41,4 +44,4 @@ const SelectBox = ({ selectList, currentSelect, setCurrentSelect }: ISelectBoxPr
   )
 }
 
-export default SelectBox
+export default DropDown

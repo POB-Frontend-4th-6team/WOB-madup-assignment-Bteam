@@ -1,15 +1,20 @@
-import { Suspense, useEffect, useState } from 'react'
-
-import ContentCard from './ContentCard'
-import SelectBox from './SelectBox'
-import styles from './advertiseManage.module.scss'
+import { MouseEvent, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
+import store from 'store'
+import _ from 'lodash'
+
+import { IAdsItem } from 'types/ads'
 import { useRecoil } from 'hooks/state'
 import { adsListState } from 'states/adsItem'
 import { getAdsItemList } from 'services/ads'
-import { IAdsItem } from 'types/ads'
+
+import ContentCard from './ContentCard'
+import styles from './advertiseManage.module.scss'
+import AdvertiseModal from './Modal/AdvertiseModal/AdvertiseModal'
+import Container from 'routes/_shared/Container'
+import DropDown from 'routes/_shared/DropDown'
+import Loading from 'routes/_shared/Loading'
 import { filterAdsItems } from './utils/filterAdsItems'
-import Modal from './Modal'
 
 const SELECT_LIST = ['전체 광고', '진행 광고', '중지 광고']
 
@@ -17,7 +22,9 @@ const AdvertiseManage = (): JSX.Element => {
   const [currentSelect, setCurrentSelect] = useState(SELECT_LIST[0])
   const [adsList, setAdsList] = useRecoil(adsListState)
   const [visibleModal, setVisibleModal] = useState(false)
+  const [selectedAdItem, setSelectedAdItem] = useState<IAdsItem | null>(null)
 
+  // TODO: 분리
   const { isLoading, data } = useQuery(
     ['getAdsList'],
     () =>
@@ -27,7 +34,6 @@ const AdvertiseManage = (): JSX.Element => {
     {
       staleTime: 6 * 50 * 1000,
       useErrorBoundary: true,
-      suspense: true,
       select: (value): IAdsItem[] => {
         // TODO: end_date가 있고 오늘 날짜 보다 이전이면 status를 ended로 변경하기
         // TODO: store 저장
@@ -37,45 +43,59 @@ const AdvertiseManage = (): JSX.Element => {
     }
   )
 
-  console.log(adsList, isLoading, data)
+  // console.log(adsList, isLoading, data)
 
   useEffect(() => {
     if (data && data.length > 0) {
+      // TODO: 여기서 store?
+      const adsLocalList = store.get('ads_list')
+
+      if (adsLocalList.length > 0) {
+        let tempAds = adsLocalList.concat(data)
+        tempAds = _.uniqBy(tempAds, 'id')
+        store.set('ads_list', tempAds)
+        setAdsList(tempAds)
+      }
       setAdsList(data)
     }
   }, [data, setAdsList])
 
-  return (
-    <main className={styles.main}>
-      <header className={styles.header}>
-        <SelectBox selectList={SELECT_LIST} setCurrentSelect={setCurrentSelect} currentSelect={currentSelect} />
+  const handleOpenModal = (e: MouseEvent<HTMLButtonElement>) => {
+    const tempItem = e.currentTarget.dataset.item ?? ''
 
-        <button type='button' className={styles.headerButton} onClick={() => setVisibleModal(true)}>
+    const adItem = tempItem !== '' ? JSON.parse(tempItem) : ''
+    setSelectedAdItem(adItem || null)
+    setVisibleModal(true)
+  }
+
+  return (
+    <Container>
+      <header className={styles.mainHeader}>
+        <DropDown
+          size='medium'
+          selectList={SELECT_LIST}
+          setCurrentSelect={setCurrentSelect}
+          currentSelect={currentSelect}
+        />
+
+        <button type='button' className={styles.headerButton} onClick={handleOpenModal}>
           광고 만들기
         </button>
       </header>
 
-      <main className={styles.cardWrapper}>
-        <div className={styles.cards}>
-          <Suspense fallback={<div>Loading...</div>}>
-            {adsList
-              .filter((value) => filterAdsItems(value, currentSelect))
-              .map((value) => {
-                return <ContentCard key={value.id} adsItem={value} />
-              })}
-          </Suspense>
-        </div>
-      </main>
-      <Modal
-        openModal={visibleModal}
-        onCancel={() => {
-          setVisibleModal(false)
-        }}
-        onConfirm={() => {
-          setVisibleModal(false)
-        }}
-      />
-    </main>
+      {isLoading && <Loading />}
+      <div className={styles.cards}>
+        {adsList
+          .filter((value) => filterAdsItems(value, currentSelect))
+          .map((value) => {
+            return <ContentCard key={value.id} adsItem={value} handleOpenModal={handleOpenModal} />
+          })}
+      </div>
+
+      {visibleModal && (
+        <AdvertiseModal openModal={visibleModal} selectedAdItem={selectedAdItem} setVisibleModal={setVisibleModal} />
+      )}
+    </Container>
   )
 }
 

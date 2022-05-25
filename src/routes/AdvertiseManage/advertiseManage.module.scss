@@ -4,16 +4,21 @@
 $ASSET_PATH: '/assets/svgs/';
 
 .main {
-  padding: 40px;
-  margin: 50px;
+  padding: 30px;
+  margin: 20px;
   margin-top: 40px;
   overflow: scroll;
   background: rgb(255, 255, 255);
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 5%) 0 4px 10px;
+
+  @include responsive.after(MD) {
+    padding: 40px;
+    margin: 50px;
+  }
 }
 
-.header {
+.mainHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,6 +35,23 @@ $ASSET_PATH: '/assets/svgs/';
 
     &:hover {
       background-color: #6f82fa;
+    }
+  }
+
+  @include responsive.between(M, SD) {
+    flex-direction: column;
+
+    > div {
+      width: 100%;
+
+      > button {
+        width: 100% !important;
+      }
+    }
+
+    .headerButton {
+      width: 100%;
+      margin-top: 10px;
     }
   }
 }

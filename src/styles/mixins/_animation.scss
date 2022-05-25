@@ -12,3 +12,55 @@
     transform: rotate(359deg);
   }
 }
+
+@keyframes openBackDrop {
+  0% {
+    top: -100%;
+  }
+
+  10% {
+    top: -90%;
+  }
+
+  30% {
+    top: -70%;
+  }
+
+  50% {
+    top: -60%;
+  }
+
+  70% {
+    top: -40%;
+  }
+
+  80% {
+    top: -20%;
+  }
+
+  90% {
+    top: -10%;
+  }
+
+  100% {
+    top: 0;
+  }
+}
+
+@keyframes openModal {
+  0% {
+    top: -100%;
+  }
+
+  30% {
+    top: 15%;
+  }
+
+  50% {
+    top: 30%;
+  }
+
+  100% {
+    top: 50%;
+  }
+}

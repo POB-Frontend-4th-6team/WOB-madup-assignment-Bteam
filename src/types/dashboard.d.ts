@@ -13,15 +13,16 @@ export interface IDailyData {
 }
 
 export interface IByChannelData {
+  sales: number
   channel: string
-  date: string
+  date?: string
   imp: number
   click: number
   cost: number
   convValue: number
   ctr: number
-  cvr: number
+  cvr?: number
   cpc: number
-  cpa: number
+  cpa?: number
   roas: number
 }

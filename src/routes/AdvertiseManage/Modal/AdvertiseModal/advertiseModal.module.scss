@@ -15,11 +15,17 @@
   height: 100%;
   background: colors.$MODAL_BACKDROP_BACKGROUND;
   opacity: 1;
-  animation: openBackDrop 0.2s linear;
+  transition: all 0.2s ease-in;
+}
+
+.backDropHidden {
+  div {
+    height: 0;
+  }
 }
 
 .modal {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   z-index: 100;
@@ -32,8 +38,13 @@
   background-color: colors.$GRAYE;
   border-radius: 5px;
   // box-shadow: 0 0 10px 0 colors.$WHITE;
+  transition: all 0.2s ease-in-out;
   transform: translate(-50%, -50%);
-  animation: openModal 0.3s linear;
+  animation: rotation 0.3s infinite ease;
+}
+
+.modalHidden {
+  top: -150%;
 }
 
 .header {
@@ -74,7 +85,7 @@
     margin: 30px 0;
 
     > * {
-      font-size: 13px !important;
+      font-size: 14px;
     }
 
     .iconHidden {
@@ -96,17 +107,29 @@
     }
   }
 
-  input[type='text'],
-  input[type='number'] {
+  .titleInput,
+  .budgetInput {
     padding: 5px;
     border-bottom: 1px solid gray;
+  }
+
+  // TODO: 만원 안먹힘
+  .budgetInput {
+    &::after {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      content: '만원';
+    }
   }
 
   .inputRadio {
     display: flex;
     justify-content: space-between;
 
-    input + label {
+    .radioLabel {
       width: 100%;
       padding: 8px 10px;
       margin: 15px 10px 5px 0;
@@ -119,7 +142,7 @@
       border-radius: 4px;
     }
 
-    input[type='radio']:checked + label {
+    .radioInput:checked + label {
       border-color: rgb(73, 80, 87);
     }
   }
@@ -172,4 +195,9 @@
     max-height: 250px;
     object-fit: contain;
   }
+}
+
+.errorMessage {
+  font-size: 12px !important;
+  color: rgb(204, 25, 25);
 }
