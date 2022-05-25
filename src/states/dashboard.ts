@@ -16,6 +16,7 @@ export const dailyFetchState = atom<boolean>({
   key: '#dailyFetchState',
   default: false,
 })
+
 export const byChannelFetchState = atom<boolean>({
   key: '#byChannelFetchState',
   default: false,

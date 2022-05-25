@@ -10,12 +10,8 @@ export const convertData = (data: IDailyData[]) => {
   const click: Data[] = []
   const cost: Data[] = []
   const conv: Data[] = []
-  const convValue: Data[] = []
-  const ctr: Data[] = []
-  const cvr: Data[] = []
-  const cpc: Data[] = []
-  const cpa: Data[] = []
   const roas: Data[] = []
+  const sales: Data[] = []
 
   data.forEach((d) => {
     imp.push({
@@ -34,29 +30,13 @@ export const convertData = (data: IDailyData[]) => {
       x: d.date,
       y: d.conv,
     })
-    convValue.push({
-      x: d.date,
-      y: d.convValue,
-    })
-    ctr.push({
-      x: d.date,
-      y: d.ctr,
-    })
-    cvr.push({
-      x: d.date,
-      y: d.cvr,
-    })
-    cpc.push({
-      x: d.date,
-      y: d.cpc,
-    })
-    cpa.push({
-      x: d.date,
-      y: d.cpa,
-    })
     roas.push({
       x: d.date,
       y: d.roas,
+    })
+    sales.push({
+      x: d.date,
+      y: (d.roas * d.cost) / 100,
     })
   })
 
@@ -65,11 +45,7 @@ export const convertData = (data: IDailyData[]) => {
     click,
     cost,
     conv,
-    convValue,
-    ctr,
-    cvr,
-    cpc,
-    cpa,
     roas,
+    sales,
   }
 }
