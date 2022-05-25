@@ -8,7 +8,6 @@ import { convertDailyData, convertWeeklyData } from './utils'
 import DropDown from 'routes/_shared/DropDown'
 import ChartItem from './ChartItem'
 import styles from '../adStatus.module.scss'
-import { getDailyData } from 'services/ads'
 
 const SELECT_LIST = ['ROAS', '광고비', '노출 수', '클릭 수', '전환 수', '매출', '없음']
 const PERIOD_SELECT_LIST = ['일간', '주간']
@@ -28,7 +27,7 @@ const Chart = (): JSX.Element => {
   const listForDropDownA = SELECT_LIST.filter((title) => title !== '없음' && title !== secondSelect)
   const listForDropDownB = SELECT_LIST.filter((title) => title !== firstSelect)
 
-  const getData = (dataKey: string) => {
+  const getDailyData = (dataKey: string) => {
     return (
       {
         ROAS: roas,
