@@ -5,10 +5,10 @@ import { dailyDataResultState, prevDailyDataResultState } from 'states/dashboard
 import { ICardContentData } from 'types/dashboard'
 import { dataProcess, processCardData } from 'utils/adDataProcess'
 
-import styles from './dashboard.module.scss'
+import styles from '../adStatus.module.scss'
 import { DecreaseIcon, IncreaseIcon } from 'assets/svgs'
 
-const AdCardContent = () => {
+const StatusCard = () => {
   const currentStartDate = store.get('startDate')
   const currentEndDate = store.get('endDate')
   const prevStartDate = store.get('prevStartDate')
@@ -40,4 +40,4 @@ const AdCardContent = () => {
   )
 }
 
-export default AdCardContent
+export default StatusCard
