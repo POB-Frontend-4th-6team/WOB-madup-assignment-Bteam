@@ -1,4 +1,3 @@
-/* eslint-disable react/style-prop-object */
 import styles from './CurrentStatusOfMedium.module.scss'
 import { useRecoilState } from 'recoil'
 import { byChannelDataResultState } from 'states/dashboard'
@@ -7,12 +6,11 @@ import Table from './Table'
 
 const CurrentStatusOfMedium = () => {
   const [byChannelData] = useRecoilState(byChannelDataResultState)
-  // console.log(byChannelData)
 
   const reduceChannelData = (_channel: string) => {
-    const fiteredDate = byChannelData.filter((el: { channel: string }) => el.channel === _channel)
-    return fiteredDate.reduce((acc, cur, i) => {
-      if (i === fiteredDate.length - 1) {
+    const fiteredData = byChannelData?.filter((el: { channel: string }) => el.channel === _channel)
+    return fiteredData.reduce((acc, cur, i) => {
+      if (i === fiteredData.length - 1) {
         return {
           sales: cur.sales + acc.sales,
           channel: cur.channel,
@@ -20,9 +18,9 @@ const CurrentStatusOfMedium = () => {
           imp: cur.imp + acc.imp,
           click: cur.click + acc.click,
           convValue: cur.convValue + acc.convValue,
-          ctr: (cur.ctr + acc.ctr) / fiteredDate.length,
-          cpc: (cur.cpc + acc.cpc) / fiteredDate.length,
-          roas: (cur.roas + acc.roas) / fiteredDate.length,
+          ctr: (cur.ctr + acc.ctr) / fiteredData.length,
+          cpc: (cur.cpc + acc.cpc) / fiteredData.length,
+          roas: (cur.roas + acc.roas) / fiteredData.length,
         }
       }
       return {
@@ -55,7 +53,6 @@ const CurrentStatusOfMedium = () => {
 
   const createVictoryBarData = (channel: string) => {
     const result = []
-    // eslint-disable-next-line guard-for-in
     for (const key in reducedAllChannelDataObj[channel]) {
       if (key === 'sales' || key === 'cost' || key === 'imp' || key === 'click' || key === 'convValue')
         result.push({

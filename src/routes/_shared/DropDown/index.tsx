@@ -1,3 +1,4 @@
+import store from 'store'
 import { DownArrow } from 'assets/svgs'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { Dispatch, MouseEvent, SetStateAction, useState } from 'react'
@@ -5,13 +6,14 @@ import { cx } from 'styles'
 import styles from './dropDown.module.scss'
 
 interface IDropDownProps {
+  selectName: string
   selectList: string[]
   currentSelect: string
   setCurrentSelect: Dispatch<SetStateAction<string>>
   size: 'large' | 'medium' | 'small'
 }
 
-const DropDown = ({ selectList, currentSelect, setCurrentSelect, size }: IDropDownProps): JSX.Element => {
+const DropDown = ({ selectName, selectList, currentSelect, setCurrentSelect, size }: IDropDownProps): JSX.Element => {
   const [isOpenSelect, setIsOpenSelect] = useState(false)
 
   const handleVisibleOptions = () => {
@@ -22,6 +24,7 @@ const DropDown = ({ selectList, currentSelect, setCurrentSelect, size }: IDropDo
     const selectedValue = e.currentTarget.dataset.value
     setCurrentSelect(selectedValue ?? selectList[0])
     setIsOpenSelect(false)
+    store.set(selectName, selectedValue)
   }
 
   const handleOnClose = () => {

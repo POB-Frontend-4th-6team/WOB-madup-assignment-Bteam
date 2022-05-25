@@ -1,11 +1,12 @@
 @use '/src/styles/constants/colors';
 @use '/src/styles/mixins/responsive';
+@use '/src/styles/mixins/flexbox';
 
 $ASSET_PATH: '/assets/svgs/';
 
 .main {
-  padding: 20px;
-  margin: 10px;
+  padding: 10px;
+  margin: 5px;
   margin-top: 40px;
   overflow: scroll;
   border-radius: 20px;
@@ -26,9 +27,7 @@ $ASSET_PATH: '/assets/svgs/';
 }
 
 .containerHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flexbox.flexbox(between, center);
   width: 100%;
   padding-bottom: 40px;
   -webkit-box-align: center;
@@ -42,6 +41,10 @@ $ASSET_PATH: '/assets/svgs/';
 
     &:hover {
       background-color: #6f82fa;
+    }
+
+    &:active {
+      background-color: colors.$MODAL_BUTTON_ACTIVE_BACKGROUND;
     }
   }
 
@@ -65,7 +68,7 @@ $ASSET_PATH: '/assets/svgs/';
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(277px, 1fr));
   grid-gap: 10px;
 
   @include responsive.after(ML) {

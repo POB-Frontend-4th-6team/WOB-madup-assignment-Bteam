@@ -1,0 +1,57 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/animation';
+@use '/src/styles/mixins/flexbox';
+
+.header {
+  @include flexbox.flexbox(between, center);
+  padding: 15px;
+
+  .title {
+    font-size: 17px;
+  }
+}
+
+.content {
+  padding: 10px 30px 30px;
+}
+
+.footer {
+  @include flexbox.flexbox(end);
+  width: 100%;
+
+  button {
+    width: 96px;
+    height: 44px;
+    padding: 5px 25px;
+    margin: 5px;
+    font-size: 15px;
+    border-radius: 5px;
+  }
+
+  .confirmButton {
+    color: colors.$GRAYD;
+    background-color: colors.$MODAL_BUTTON_BACKGROUND;
+
+    &:hover {
+      color: colors.$GRAYE;
+      background-color: colors.$MODAL_BUTTON_HOVER_BACKGROUND;
+    }
+
+    &:active {
+      background-color: colors.$MODAL_BUTTON_ACTIVE_BACKGROUND;
+    }
+  }
+
+  .cancelButton {
+    width: fit-content;
+    color: colors.$GRAY2;
+
+    &:hover {
+      color: colors.$GRAYA;
+    }
+
+    &:active {
+      color: colors.$GRAY2;
+    }
+  }
+}

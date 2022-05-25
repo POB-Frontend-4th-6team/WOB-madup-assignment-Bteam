@@ -29,9 +29,9 @@ const useFormInput = ({ validateFunction, initialValue }: IUseFormInputProps) =>
   }, [])
 
   const reset = useCallback(() => {
-    setValue(initialValue)
+    setValue('')
     setIsTouched(false)
-  }, [initialValue])
+  }, [])
 
   return {
     value,

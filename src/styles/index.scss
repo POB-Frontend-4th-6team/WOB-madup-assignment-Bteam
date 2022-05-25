@@ -1,4 +1,9 @@
 // Global styles
+@use '/src/styles/constants/colors';
 @import 'base/reset';
 @import 'base/more';
 @import 'base/fonts';
+
+body {
+  background-color: colors.$MAIN_BACKGROUND;
+}

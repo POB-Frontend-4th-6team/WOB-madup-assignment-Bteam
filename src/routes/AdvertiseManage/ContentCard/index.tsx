@@ -29,7 +29,7 @@ const ContentCard = ({ adsItem, handleOpenModal }: IContentCardProps): JSX.Eleme
 
   // TODO: 단위 맞음?
   return (
-    <article className={styles.card}>
+    <li className={styles.card}>
       <header>
         <h3>{adsTitle}</h3>
       </header>
@@ -62,7 +62,7 @@ const ContentCard = ({ adsItem, handleOpenModal }: IContentCardProps): JSX.Eleme
       <button type='button' data-item={JSON.stringify(adsItem)} onClick={handleOpenModal}>
         수정하기
       </button>
-    </article>
+    </li>
   )
 }
 

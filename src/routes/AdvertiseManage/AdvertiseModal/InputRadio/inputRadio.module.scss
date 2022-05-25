@@ -1,0 +1,27 @@
+@use '/src/styles/mixins/flexbox';
+
+.radioTitle {
+  font-size: 12px;
+  color: rgb(73, 80, 87);
+}
+
+.inputRadio {
+  @include flexbox.flexbox(between);
+
+  .radioLabel {
+    width: 100%;
+    padding: 8px 10px;
+    margin: 15px 10px 5px 0;
+    font-size: 13px;
+    color: rgb(73, 80, 87);
+    text-align: center;
+    letter-spacing: -0.5px;
+    cursor: pointer;
+    border: 1px solid rgb(206, 212, 218);
+    border-radius: 4px;
+  }
+
+  .radioInput:checked + label {
+    border-color: rgb(73, 80, 87);
+  }
+}

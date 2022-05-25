@@ -41,12 +41,14 @@ const Chart = (): JSX.Element => {
       <div className={styles.dropDownsContainer}>
         <div className={styles.dropDownWrapper}>
           <DropDown
+            selectName='a'
             selectList={SELECT_LIST}
             currentSelect={firstSelect}
             setCurrentSelect={setFirstSelect}
             size='small'
           />
           <DropDown
+            selectName='b'
             selectList={SELECT_LIST}
             currentSelect={secondSelect}
             setCurrentSelect={setSecondSelect}
@@ -55,6 +57,7 @@ const Chart = (): JSX.Element => {
         </div>
         <div>
           <DropDown
+            selectName='c'
             selectList={PERIOD_SELECT_LIST}
             currentSelect={periodSelect}
             setCurrentSelect={setPeriodSelect}

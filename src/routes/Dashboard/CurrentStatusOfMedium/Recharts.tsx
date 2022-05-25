@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryStack, VictoryTheme, VictoryVoronoiContainer } from 'victory'
 import styles from './CurrentStatusOfMedium.module.scss'
 
@@ -6,6 +7,7 @@ const Recharts = ({ createVictoryBarData }: { createVictoryBarData: Function }) 
     bar: {
       style: {
         data: { stroke: '#FFFFFF', strokeWidth: 0.3 },
+        labels: { fontSize: 15 },
       },
       barWidth: 30,
       x: 'xAxis',
@@ -18,7 +20,35 @@ const Recharts = ({ createVictoryBarData }: { createVictoryBarData: Function }) 
   }
   return (
     <div className={styles.rechartsWrapper}>
-      <VictoryChart width={1300} height={400} domainPadding={{ x: [150, 150], y: 1 }} theme={VictoryTheme.material}>
+      <VictoryChart
+        width={1300}
+        height={400}
+        domainPadding={{ x: [150, 150], y: 1 }}
+        theme={VictoryTheme.material}
+        containerComponent={
+          <VictoryVoronoiContainer
+            labels={({ datum }) => {
+              if (datum._stack === 1) {
+                const value = createVictoryBarData('google').filter((item: any) => item.xAxis === datum.xName)
+                return `${value[0].yAxis}%`
+              }
+              if (datum._stack === 2) {
+                const value = createVictoryBarData('facebook').filter((item: any) => item.xAxis === datum.xName)
+                return `${value[0].yAxis}%`
+              }
+              if (datum._stack === 3) {
+                const value = createVictoryBarData('naver').filter((item: any) => item.xAxis === datum.xName)
+                return `${value[0].yAxis}%`
+              }
+              if (datum._stack === 4) {
+                const value = createVictoryBarData('kakao').filter((item: any) => item.xAxis === datum.xName)
+                return `${value[0].yAxis}%`
+              }
+              return 'no result'
+            }}
+          />
+        }
+      >
         <VictoryAxis
           tickValues={['sales', 'cost', 'imp', 'click', 'convValue']}
           tickFormat={['매출', '광고비', '노출 수', '클릭 수', '전환 수']}
@@ -31,24 +61,24 @@ const Recharts = ({ createVictoryBarData }: { createVictoryBarData: Function }) 
           <VictoryBar {...CHART_STYLE.bar} cornerRadius={{ top: 6 }} data={createVictoryBarData('kakao')} />
         </VictoryStack>
       </VictoryChart>
-      <div className={styles.rechartsLegendWrapper}>
+      <fieldset className={styles.rechartsLegendWrapper}>
         <div className={styles.textWrapper}>
           <div className={styles.circle} style={{ backgroundColor: 'rgb(79, 173, 247)' }} />
-          <span>구글</span>
+          <legend>구글</legend>
         </div>
         <div className={styles.textWrapper}>
           <div className={styles.circle} style={{ backgroundColor: 'rgb(133, 218, 71)' }} />
-          <span>페이스북</span>
+          <legend>페이스북</legend>
         </div>
         <div className={styles.textWrapper}>
           <div className={styles.circle} style={{ backgroundColor: 'rgb(172, 138, 248)' }} />
-          <span>네이버</span>
+          <legend>네이버</legend>
         </div>
         <div className={styles.textWrapper}>
           <div className={styles.circle} style={{ backgroundColor: 'rgb(248, 216, 73)' }} />
-          <span>카카오</span>
+          <legend>카카오</legend>
         </div>
-      </div>
+      </fieldset>
     </div>
   )
 }

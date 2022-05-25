@@ -10,7 +10,7 @@ import { getAdsItemList } from 'services/ads'
 
 import ContentCard from './ContentCard'
 import styles from './advertiseManage.module.scss'
-import AdvertiseModal from './Modal/AdvertiseModal/AdvertiseModal'
+import AdvertiseModal from './AdvertiseModal'
 import Container from 'routes/_shared/Container'
 import DropDown from 'routes/_shared/DropDown'
 import Loading from 'routes/_shared/Loading'
@@ -28,24 +28,23 @@ const AdvertiseManage = (): JSX.Element => {
   const { isLoading, data } = useQuery(
     ['getAdsList'],
     () =>
-      getAdsItemList().then((res): IAdsItem[] => {
-        return res.data.ads
+      getAdsItemList().then((response): IAdsItem[] => {
+        return response.ads
       }),
     {
       staleTime: 6 * 50 * 1000,
+      retryDelay: 7000,
       useErrorBoundary: true,
       select: (value): IAdsItem[] => {
-        // TODO: end_date가 있고 오늘 날짜 보다 이전이면 status를 ended로 변경하기
-        // TODO: store 저장
         if (!value.length) return []
         return value
       },
     }
   )
 
-  // console.log(adsList, isLoading, data)
-
   useEffect(() => {
+    const localStatus = store.get('adsStatus')
+    if (localStatus) setCurrentSelect(localStatus)
     if (data && data.length > 0) {
       // TODO: 여기서 store?
       const adsLocalList = store.get('ads_list')
@@ -60,15 +59,22 @@ const AdvertiseManage = (): JSX.Element => {
       store.set('ads_list', data)
       setAdsList(data)
     }
-  }, [data, setAdsList])
+  }, [data, setAdsList, currentSelect])
 
   const handleOpenModal = (e: MouseEvent<HTMLButtonElement>) => {
     const tempItem = e.currentTarget.dataset.item ?? ''
-
-    const adItem = tempItem !== '' ? JSON.parse(tempItem) : ''
+    // TODO: 수정
+    const adItem = tempItem === '' ? '' : JSON.parse(tempItem)
     setSelectedAdItem(adItem || null)
     setVisibleModal(true)
   }
+
+  const Cards = adsList
+    .filter((value) => filterAdsItems(value, currentSelect))
+    .sort((a, b) => b.id - a.id)
+    .map((value) => {
+      return <ContentCard key={value.id} adsItem={value} handleOpenModal={handleOpenModal} />
+    })
 
   return (
     <main className={styles.main}>
@@ -78,6 +84,7 @@ const AdvertiseManage = (): JSX.Element => {
       <Container>
         <header className={styles.containerHeader}>
           <DropDown
+            selectName='adsStatus'
             size='medium'
             selectList={SELECT_LIST}
             setCurrentSelect={setCurrentSelect}
@@ -90,18 +97,10 @@ const AdvertiseManage = (): JSX.Element => {
         </header>
 
         {isLoading && <Loading />}
-        <div className={styles.cards}>
-          {adsList
-            .filter((value) => filterAdsItems(value, currentSelect))
-            .sort((a, b) => b.id - a.id)
-            .map((value) => {
-              return <ContentCard key={value.id} adsItem={value} handleOpenModal={handleOpenModal} />
-            })}
-        </div>
 
-        {visibleModal && (
-          <AdvertiseModal openModal={visibleModal} selectedAdItem={selectedAdItem} setVisibleModal={setVisibleModal} />
-        )}
+        <ul className={styles.cards}>{Cards}</ul>
+
+        {visibleModal && <AdvertiseModal selectedAdItem={selectedAdItem} setVisibleModal={setVisibleModal} />}
       </Container>
     </main>
   )

@@ -1,0 +1,41 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/mixins/position';
+
+.inputForm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 50px 0;
+
+  .formTitle {
+    font-size: 12px;
+    color: rgb(73, 80, 87);
+  }
+
+  .iconHidden {
+    display: none;
+  }
+
+  svg {
+    @include position.position(absolute, 30px 10px auto auto);
+    block-size: 12px;
+    width: fit-content;
+    cursor: pointer;
+    opacity: 0.3;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  .inputText {
+    padding: 5px;
+    border-bottom: 1px solid gray;
+  }
+}
+
+.errorMessage {
+  font-size: 12px !important;
+  color: rgb(211, 20, 20);
+}
