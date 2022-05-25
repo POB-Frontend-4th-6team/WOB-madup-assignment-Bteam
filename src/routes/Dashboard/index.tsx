@@ -11,6 +11,7 @@ import CalendarModal from './CalendarModal/CalendarModal'
 import CurrentStatusOfMedium from './CurrentStatusOfMedium'
 import { DownArrow } from 'assets/svgs'
 import styles from './dashboard.module.scss'
+import Loading from 'routes/_shared/Loading'
 
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -21,7 +22,7 @@ const Dashboard = () => {
   const [byChannelFetch, setByChannelFetch] = useRecoilState(byChannelFetchState)
   const setByChannelData = useSetRecoilState(byChannelDataResultState)
 
-  const { isLoading: isChannelLoading } = useQuery(
+  const { isLoading } = useQuery(
     ['getByChannelData', currentStartDate, currentEndDate],
     () => {
       getByChannelData(currentStartDate, currentEndDate, setByChannelData)
@@ -30,6 +31,7 @@ const Dashboard = () => {
       useErrorBoundary: true,
       enabled: !!byChannelFetch,
       staleTime: 6 * 50 * 1000,
+      retryDelay: 7000,
       onSuccess: () => {
         setByChannelFetch(false)
       },
@@ -57,11 +59,10 @@ const Dashboard = () => {
         </div>
       </header>
       <main className={styles.main}>
+        {isLoading && <Loading />}
+
         <AdStatus />
-        <section className={styles.currentStatusOfMediumSectionWrapper}>
-          <h3 className={styles.currentStatusOfMediumTitle}>매체 현황</h3>
-          <CurrentStatusOfMedium />
-        </section>
+        <CurrentStatusOfMedium />
       </main>
     </>
   )

@@ -30,6 +30,7 @@ $ASSET_PATH: '/assets/svgs/';
   ul {
     position: absolute;
     top: 45px;
+    display: none;
     width: 100%;
     height: auto;
     padding-left: 0;
@@ -69,6 +70,7 @@ $ASSET_PATH: '/assets/svgs/';
 
 .isOpenSelect {
   ul {
+    display: block;
     opacity: 1;
   }
 

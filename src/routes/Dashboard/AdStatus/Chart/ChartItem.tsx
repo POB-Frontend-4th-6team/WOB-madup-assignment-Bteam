@@ -1,4 +1,4 @@
-import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLine, VictoryTheme } from 'victory'
+import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLine, VictoryTheme, VictoryVoronoiContainer } from 'victory'
 
 import { useRecoilState } from 'hooks/state'
 import { dailyDataResultState } from 'states/dashboard'
@@ -11,8 +11,8 @@ type Data = {
 }
 
 interface Props {
-  firstData: Data[] | null
-  secondData: Data[] | null
+  firstData: Data[] | undefined
+  secondData: Data[] | undefined
 }
 
 const ChartItem = ({ firstData, secondData }: Props): JSX.Element => {
@@ -23,8 +23,8 @@ const ChartItem = ({ firstData, secondData }: Props): JSX.Element => {
     height: 400,
   }
 
-  const getMaxNum = (d: Data[]) => {
-    if (d.length >= 1) return d.reduce((max, p) => (p.y > max ? p.y : max), d[0].y)
+  const getMaxNum = (d: Data[] | undefined) => {
+    if (d && d.length > 0) return d?.reduce((max, p) => (p.y > max ? p.y : max), d[0].y)
     return -1
   }
 
@@ -36,56 +36,66 @@ const ChartItem = ({ firstData, secondData }: Props): JSX.Element => {
     return firstDigit * square
   }
 
-  const data = [firstData, secondData]
-  const xOffsets = [50, 910]
-  const colors = ['#4fadf7', '#85da47']
-
   return (
     <div className={styles.chartContainer}>
       {dailyData.length !== 0 && (
-        <VictoryChart theme={VictoryTheme.material} {...options} domain={{ y: [0, 1] }}>
-          <VictoryAxis />
-          {data.map((d, i) => {
-            if (d) {
-              const key = `victoryAxis-${i}`
-              return (
-                <VictoryAxis
-                  key={key}
-                  dependentAxis
-                  offsetX={xOffsets[i]}
-                  tickLabelComponent={<VictoryLabel dy={15} textAnchor='start' />}
-                  style={{
-                    axis: { stroke: 'none' },
-                    tickLabels: { fill: 'black' },
-                  }}
-                  tickValues={[0.2, 0.4, 0.6, 0.8, 1]}
-                  tickFormat={(t) => (t * maxima(getMaxNum(d))).toLocaleString()}
-                />
-              )
-            }
-            return null
-          })}
-          {data.map((d, i) => {
-            if (d) {
-              const key = `victoryLine-${i}`
-              return (
-                <VictoryLine
-                  key={key}
-                  data={d}
-                  animate={{
-                    duration: 2000,
-                    onLoad: { duration: 1000 },
-                  }}
-                  style={{
-                    parent: { border: '1px solid #ccc' },
-                    data: { stroke: colors[i] },
-                  }}
-                  y={(datum) => datum.y / maxima(getMaxNum(d))}
-                />
-              )
-            }
-            return null
-          })}
+        <VictoryChart
+          theme={VictoryTheme.material}
+          {...options}
+          domain={{ y: [0, 1] }}
+          containerComponent={<VictoryVoronoiContainer labels={({ datum }) => datum.y} />}
+        >
+          <VictoryAxis fixLabelOverlap />
+          <VictoryAxis
+            dependentAxis
+            offsetX={50}
+            tickLabelComponent={<VictoryLabel dy={15} textAnchor='start' />}
+            style={{
+              axis: { stroke: 'none' },
+              tickLabels: { fill: 'black' },
+            }}
+            tickValues={[0.2, 0.4, 0.6, 0.8, 1]}
+            tickFormat={(t) => (t * maxima(getMaxNum(firstData))).toLocaleString()}
+          />
+          {secondData && (
+            <VictoryAxis
+              dependentAxis
+              offsetX={910}
+              tickLabelComponent={<VictoryLabel dy={15} dx={25} textAnchor='end' />}
+              style={{
+                axis: { stroke: 'none' },
+                tickLabels: { fill: 'black' },
+              }}
+              tickValues={[0.2, 0.4, 0.6, 0.8, 1]}
+              tickFormat={(t) => (t * maxima(getMaxNum(secondData))).toLocaleString()}
+            />
+          )}
+          <VictoryLine
+            data={firstData}
+            animate={{
+              duration: 2000,
+              onLoad: { duration: 1000 },
+            }}
+            style={{
+              parent: { border: '1px solid #ccc' },
+              data: { stroke: '#4fadf7' },
+            }}
+            y={(datum) => datum.y / maxima(getMaxNum(firstData))}
+          />
+          {secondData && (
+            <VictoryLine
+              data={secondData}
+              animate={{
+                duration: 2000,
+                onLoad: { duration: 1000 },
+              }}
+              style={{
+                parent: { border: '1px solid #ccc' },
+                data: { stroke: '#85da47' },
+              }}
+              y={(datum) => datum.y / maxima(getMaxNum(secondData))}
+            />
+          )}
         </VictoryChart>
       )}
     </div>

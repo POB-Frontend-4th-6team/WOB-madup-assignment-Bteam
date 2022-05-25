@@ -9,6 +9,7 @@ import { getDailyData } from 'services/ads'
 import Chart from './Chart'
 import StatusCard from './StatusCard'
 import styles from './adStatus.module.scss'
+import Loading from 'routes/_shared/Loading'
 
 const AdStatus = () => {
   const currentStartDate = store.get('startDate')
@@ -30,7 +31,7 @@ const AdStatus = () => {
     })
   })
 
-  const { isLoading: isDailyLoading } = useQuery(
+  const { isLoading } = useQuery(
     ['getDailyData', currentStartDate, currentEndDate],
     () => {
       getDailyData(currentStartDate, currentEndDate).then((res) => {
@@ -40,13 +41,14 @@ const AdStatus = () => {
     {
       useErrorBoundary: true,
       enabled: !!dailyFetch,
+      retryDelay: 7000,
       onSuccess: () => {
         setDailyFetch(false)
       },
     }
   )
 
-  const { data: prevDailyDataResult } = useQuery(
+  useQuery(
     ['getPrevDailyData', prevStartDate, prevEndDate],
     () => {
       getDailyData(prevStartDate, prevEndDate).then((res) => {
@@ -65,7 +67,10 @@ const AdStatus = () => {
   return (
     <section className={styles.adSectionWrapper}>
       <h3 className={styles.adSectionTitle}>통합 광고 현황</h3>
+
       <div className={styles.boardWrapper}>
+        {isLoading && <Loading />}
+
         <StatusCard />
         <Chart />
       </div>

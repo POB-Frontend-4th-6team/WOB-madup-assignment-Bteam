@@ -17,12 +17,18 @@ const Chart = (): JSX.Element => {
 
   const currentStartDate = store.get('startDate')
   const currentEndDate = store.get('endDate')
+  const currentPeriodSelect = store.get('dayOrWeek')
 
   const [firstSelect, setFirstSelect] = useState(CATEGORY_SELECT_LIST[0])
   const [secondSelect, setSecondSelect] = useState(CATEGORY_SELECT_LIST[1])
   const [periodSelect, setPeriodSelect] = useState(PERIOD_SELECT_LIST[0])
 
-  const { roas, cost, imp, click, conv, sales } = convertDailyData(dailyData)
+  const { roasDaily, costDaily, impDaily, clickDaily, convDaily, salesDaily } = convertDailyData(dailyData)
+  const { roasWeekly, costWeekly, impWeekly, clickWeekly, convWeekly, salesWeekly } = convertWeeklyData(
+    dailyData,
+    currentStartDate,
+    currentEndDate
+  )
 
   const listForDropDownA = CATEGORY_SELECT_LIST.filter((title) => title !== '없음' && title !== secondSelect)
   const listForDropDownB = CATEGORY_SELECT_LIST.filter((title) => title !== firstSelect)
@@ -30,45 +36,41 @@ const Chart = (): JSX.Element => {
   const getDailyData = (dataKey: string) => {
     return (
       {
-        ROAS: roas,
-        광고비: cost,
-        '노출 수': imp,
-        '클릭 수': click,
-        '전환 수': conv,
-        매출: sales,
-      }[dataKey] ?? null
+        ROAS: roasDaily,
+        광고비: costDaily,
+        '노출 수': impDaily,
+        '클릭 수': clickDaily,
+        '전환 수': convDaily,
+        매출: salesDaily,
+      }[dataKey] ?? undefined
     )
   }
 
-  let firstData = null
-  let secondData = null
+  const getWeeklyData = (dataKey: string) => {
+    return (
+      {
+        ROAS: roasWeekly,
+        광고비: costWeekly,
+        '노출 수': impWeekly,
+        '클릭 수': clickWeekly,
+        '전환 수': convWeekly,
+        매출: salesWeekly,
+      }[dataKey] ?? undefined
+    )
+  }
 
-  if (periodSelect === '일간') {
+  let firstData =
+    {
+      일간: getDailyData(firstSelect),
+      주간: getWeeklyData(firstSelect),
+    }[periodSelect] ?? undefined
+
+  let secondData
+
+  if (currentPeriodSelect === '일간') {
     firstData = getDailyData(firstSelect)
     secondData = getDailyData(secondSelect)
   } else {
-    const {
-      roas: roasWeekly,
-      cost: costWeekly,
-      imp: impWeekly,
-      click: clickWeekly,
-      conv: convWeekly,
-      sales: salesWeekly,
-    } = convertWeeklyData(dailyData, currentStartDate, currentEndDate)
-
-    const getWeeklyData = (dataKey: string) => {
-      return (
-        {
-          ROAS: roasWeekly,
-          광고비: costWeekly,
-          '노출 수': impWeekly,
-          '클릭 수': clickWeekly,
-          '전환 수': convWeekly,
-          매출: salesWeekly,
-        }[dataKey] ?? null
-      )
-    }
-
     firstData = getWeeklyData(firstSelect)
     secondData = getWeeklyData(secondSelect)
   }

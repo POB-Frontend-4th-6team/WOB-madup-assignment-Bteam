@@ -16,17 +16,16 @@ const getNewDate = (date: string) => {
 }
 
 export const convertWeeklyData = (data: IDailyData[], startDateStr: string, endDateStr: string) => {
-  const imp: Data[] = []
-  const click: Data[] = []
-  const cost: Data[] = []
-  const conv: Data[] = []
-  const roas: Data[] = []
-  const sales: Data[] = []
+  const impWeekly: Data[] = []
+  const clickWeekly: Data[] = []
+  const costWeekly: Data[] = []
+  const convWeekly: Data[] = []
+  const roasWeekly: Data[] = []
+  const salesWeekly: Data[] = []
 
   const startDate = getNewDate(startDateStr)
   const endDate = getNewDate(endDateStr)
 
-  // const tmpDate = startDate
   let tmpSum = { imp: 0, click: 0, cost: 0, conv: 0, roas: 0, sales: 0 }
 
   data.some((d) => {
@@ -37,7 +36,7 @@ export const convertWeeklyData = (data: IDailyData[], startDateStr: string, endD
     const dateDays = Math.abs(diffDate / (1000 * 3600 * 24))
 
     if (dateDays < 7) {
-      week = 7 - startDate.getDay()
+      week = 7 - dateDays
     } else if (tmpDate === endDate) {
       week = endDate.getDay()
     } else {
@@ -54,27 +53,27 @@ export const convertWeeklyData = (data: IDailyData[], startDateStr: string, endD
     if (tmpDate.getDay() === 1 || d.date === endDateStr) {
       const tmpDateStr = dayjs(tmpDate).format('YYYY-MM-DD').toString()
 
-      imp.push({
+      impWeekly.push({
         x: tmpDateStr,
         y: Math.round(tmpSum.imp / week),
       })
-      click.push({
+      clickWeekly.push({
         x: tmpDateStr,
         y: Math.round(tmpSum.click / week),
       })
-      cost.push({
+      costWeekly.push({
         x: tmpDateStr,
         y: Math.round(tmpSum.cost / week),
       })
-      conv.push({
+      convWeekly.push({
         x: tmpDateStr,
         y: Math.round(tmpSum.conv / week),
       })
-      roas.push({
+      roasWeekly.push({
         x: tmpDateStr,
         y: Math.round(tmpSum.roas / week),
       })
-      sales.push({
+      salesWeekly.push({
         x: tmpDateStr,
         y: Math.round(tmpSum.sales / week),
       })
@@ -86,56 +85,56 @@ export const convertWeeklyData = (data: IDailyData[], startDateStr: string, endD
   })
 
   return {
-    imp,
-    click,
-    cost,
-    conv,
-    roas,
-    sales,
+    impWeekly,
+    clickWeekly,
+    costWeekly,
+    convWeekly,
+    roasWeekly,
+    salesWeekly,
   }
 }
 
 export const convertDailyData = (data: IDailyData[]) => {
-  const imp: Data[] = []
-  const click: Data[] = []
-  const cost: Data[] = []
-  const conv: Data[] = []
-  const roas: Data[] = []
-  const sales: Data[] = []
+  const impDaily: Data[] = []
+  const clickDaily: Data[] = []
+  const costDaily: Data[] = []
+  const convDaily: Data[] = []
+  const roasDaily: Data[] = []
+  const salesDaily: Data[] = []
 
   data.forEach((d) => {
-    imp.push({
+    impDaily.push({
       x: d.date,
       y: d.imp,
     })
-    click.push({
+    clickDaily.push({
       x: d.date,
       y: d.click,
     })
-    cost.push({
+    costDaily.push({
       x: d.date,
       y: d.cost,
     })
-    conv.push({
+    convDaily.push({
       x: d.date,
       y: d.conv,
     })
-    roas.push({
+    roasDaily.push({
       x: d.date,
       y: d.roas,
     })
-    sales.push({
+    salesDaily.push({
       x: d.date,
       y: (d.roas * d.cost) / 100,
     })
   })
 
   return {
-    imp,
-    click,
-    cost,
-    conv,
-    roas,
-    sales,
+    impDaily,
+    clickDaily,
+    costDaily,
+    convDaily,
+    roasDaily,
+    salesDaily,
   }
 }
