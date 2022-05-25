@@ -18,8 +18,6 @@ interface IProps {
 
 const currentStartDate = store.get('startDate')
 const currentEndDate = store.get('endDate')
-const prevStartDate = store.get('prevStartDate')
-const prevEndDate = store.get('prevEndDate')
 
 if (!currentStartDate && !currentEndDate) {
   store.set('startDate', '2022-04-14')
@@ -29,8 +27,8 @@ if (!currentStartDate && !currentEndDate) {
 }
 
 const CalendarModal = ({ setIsModalOpen }: IProps) => {
-  const [currentCalendarStartDate, setCurrentCalendarStartDate] = useState(store.get('startDate'))
-  const [currentCalenderEndDate, setCurrentCalendarEndDate] = useState(store.get('endDate'))
+  const [currentCalendarStartDate] = useState(store.get('startDate'))
+  const [currentCalenderEndDate] = useState(store.get('endDate'))
   const [dateRange, setDateRange] = useState<any>([
     {
       startDate: new Date(dayjs(currentCalendarStartDate).format('YYYY-MM-DD')),

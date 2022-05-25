@@ -21,3 +21,8 @@ export const byChannelFetchState = atom<boolean>({
   key: '#byChannelFetchState',
   default: false,
 })
+
+export const prevDailyDataResultState = atom<IDailyData[]>({
+  key: '#prevdailyDataResultState',
+  default: [],
+})
