@@ -16,7 +16,7 @@ interface IContentCardProps {
   handleOpenModal: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
-const ContentCard = ({ adsItem, handleOpenModal }: IContentCardProps): JSX.Element => {
+const ContentCard = ({ adsItem, handleOpenModal }: IContentCardProps) => {
   // TODO: bignumber 제거, 정리
   const adsTitle = adsItem.adType === 'web' ? `웹광고_${adsItem.title}` : `앱광고_${adsItem.title}`
   const adsStatus = adsItem.status === 'active' ? '진행중' : '종료'

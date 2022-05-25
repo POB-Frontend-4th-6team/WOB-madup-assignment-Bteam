@@ -29,7 +29,7 @@ const ServiceSelection = () => {
   const dropDownRef = useOnClickOutside(handleCloseDropDown)
 
   return (
-    <div className={styles.serviceSelection}>
+    <section className={styles.serviceSelection}>
       <h6 className={styles.sideMenuTitle}>서비스</h6>
       <div className={styles.selectBox} ref={dropDownRef}>
         {currentServiceTitle}
@@ -57,7 +57,7 @@ const ServiceSelection = () => {
           </ul>
         )}
       </div>
-    </div>
+    </section>
   )
 }
 

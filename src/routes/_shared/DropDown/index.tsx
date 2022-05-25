@@ -14,7 +14,7 @@ interface IDropDownProps {
   size: 'large' | 'medium' | 'small'
 }
 
-const DropDown = ({ selectName, selectList, setCurrentSelect, size }: IDropDownProps): JSX.Element => {
+const DropDown = ({ selectName, selectList, setCurrentSelect, size }: IDropDownProps) => {
   const [isOpenSelect, setIsOpenSelect] = useState(false)
   const [isCategorySelect, setIsCategorySelect] = useState(false)
   const [categoryColor, setCategoryColor] = useState('')

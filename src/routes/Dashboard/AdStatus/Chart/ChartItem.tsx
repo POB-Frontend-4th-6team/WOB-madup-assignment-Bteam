@@ -15,7 +15,7 @@ interface Props {
   secondData: Data[] | undefined
 }
 
-const ChartItem = ({ firstData, secondData }: Props): JSX.Element => {
+const ChartItem = ({ firstData, secondData }: Props) => {
   const [dailyData] = useRecoilState(dailyDataResultState)
 
   const options = {

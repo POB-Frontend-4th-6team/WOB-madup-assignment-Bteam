@@ -7,9 +7,9 @@ import { cx } from 'styles'
 import styles from './header.module.scss'
 
 const Header = () => {
-  const [sideMenuOpen, setSideMenuopen] = useRecoil(menuState)
+  const [sideMenuOpen, setSideMenuOpen] = useRecoil(menuState)
   const handleOpenMenu = () => {
-    setSideMenuopen((prev) => !prev)
+    setSideMenuOpen((prev) => !prev)
   }
 
   return (

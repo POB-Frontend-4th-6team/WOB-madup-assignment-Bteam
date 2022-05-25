@@ -4,23 +4,23 @@ import dayjs from 'dayjs'
 import { IAdsItem } from 'types/advertiseManage'
 import { useRecoil } from 'hooks/state'
 import { adsListState } from 'states/adsItem'
+import { validateBudget, validateTitle } from './validateState'
+import { updateAdvertiseList } from './updateAdvertiseList'
+import useFormInput from './useFormInput'
+import { addPutAdsItemAPI } from 'services/ads'
 
 import Modal from './ModalPortal'
 import InputText from './InputText'
 import InputRadio from './InputRadio'
-import useFormInput from './useFormInput'
-import { validateBudget, validateTitle } from './validateState'
-import { updateAdvertiseList } from './updateAdvertiseList'
 import { CloseIcon } from 'assets/svgs/index'
 import styles from './advertiseModal.module.scss'
-import { addPutAdsItemAPI } from 'services/ads'
 
 interface IAdsModalProps {
   selectedAdItem: IAdsItem | null
   setVisibleModal: Dispatch<SetStateAction<boolean>>
 }
 
-const AdvertiseModal = ({ selectedAdItem, setVisibleModal }: IAdsModalProps): JSX.Element => {
+const AdvertiseModal = ({ selectedAdItem, setVisibleModal }: IAdsModalProps) => {
   const isAdd = !selectedAdItem?.id
 
   const [advertiseList, setAdvertiseList] = useRecoil(adsListState)
