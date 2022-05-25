@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useState } from 'react'
+import { ChangeEvent, MouseEvent, useCallback, useState } from 'react'
 
 interface IUseFormInputProps {
   validateFunction?: (value: string) => boolean
@@ -6,39 +6,38 @@ interface IUseFormInputProps {
 }
 
 const useFormInput = ({ validateFunction, initialValue }: IUseFormInputProps) => {
-  console.log('init : ', initialValue)
   const [value, setValue] = useState(initialValue)
   const [isTouched, setIsTouched] = useState(false)
-  console.log('value : ', value)
 
   let valueIsValid = true
   if (validateFunction) valueIsValid = validateFunction(value)
 
   const hasError = !valueIsValid && isTouched
 
-  const valueChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const valueChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { value: currentValue } = e.currentTarget
     setValue(currentValue)
-  }
+  }, [])
 
-  const valueClickHandler = (e: MouseEvent<HTMLInputElement>) => {
+  const valueClickHandler = useCallback((e: MouseEvent<HTMLInputElement>) => {
     const { value: currentValue } = e.currentTarget
     setValue(currentValue)
-  }
+  }, [])
 
-  const inputBlurHandler = () => {
+  const inputBlurHandler = useCallback(() => {
     setIsTouched(true)
-  }
+  }, [])
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setValue(initialValue)
     setIsTouched(false)
-  }
+  }, [initialValue])
 
   return {
     value,
     setValue,
     hasError,
+    valueIsValid,
     valueChangeHandler,
     valueClickHandler,
     inputBlurHandler,
