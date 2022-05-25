@@ -16,6 +16,12 @@ interface IDropDownProps {
 const DropDown = ({ selectName, selectList, currentSelect, setCurrentSelect, size }: IDropDownProps): JSX.Element => {
   const [isOpenSelect, setIsOpenSelect] = useState(false)
 
+  const displayedItem = store.get(selectName)
+
+  if (!displayedItem) {
+    store.set(selectName, selectList[0])
+  }
+
   const handleVisibleOptions = () => {
     setIsOpenSelect((prev) => !prev)
   }
@@ -35,7 +41,7 @@ const DropDown = ({ selectName, selectList, currentSelect, setCurrentSelect, siz
   return (
     <div className={cx(styles.select, styles[size], { [styles.isOpenSelect]: isOpenSelect })} ref={dropDownRef}>
       <button type='button' className={cx(styles.selected, styles[size])} onClick={handleVisibleOptions}>
-        {currentSelect}
+        {displayedItem}
         <DownArrow className={cx(styles.downArrowIcon, { [styles.selectMenuOpen]: isOpenSelect })} />
       </button>
       <ul>

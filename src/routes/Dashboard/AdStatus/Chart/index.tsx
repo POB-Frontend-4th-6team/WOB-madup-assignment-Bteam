@@ -19,10 +19,13 @@ const Chart = (): JSX.Element => {
   const currentEndDate = store.get('endDate')
 
   const [firstSelect, setFirstSelect] = useState(SELECT_LIST[0])
-  const [secondSelect, setSecondSelect] = useState(SELECT_LIST[0])
+  const [secondSelect, setSecondSelect] = useState(SELECT_LIST[1])
   const [periodSelect, setPeriodSelect] = useState(PERIOD_SELECT_LIST[0])
 
   const { roas, cost, imp, click, conv, sales } = convertDailyData(dailyData)
+
+  const listForDropDownA = SELECT_LIST.filter((title) => title !== '없음' && title !== secondSelect)
+  const listForDropDownB = SELECT_LIST.filter((title) => title !== firstSelect)
 
   const getDailyData = (dataKey: string) => {
     return (
@@ -76,14 +79,14 @@ const Chart = (): JSX.Element => {
         <div className={styles.dropDownWrapper}>
           <DropDown
             selectName='a'
-            selectList={SELECT_LIST}
+            selectList={listForDropDownA}
             currentSelect={firstSelect}
             setCurrentSelect={setFirstSelect}
             size='small'
           />
           <DropDown
             selectName='b'
-            selectList={SELECT_LIST}
+            selectList={listForDropDownB}
             currentSelect={secondSelect}
             setCurrentSelect={setSecondSelect}
             size='small'

@@ -31,10 +31,11 @@ const ServiceSelection = () => {
           onClick={handleToggleSelectMenu}
         />
         {isSelectMenuOpen && (
-          <ul className={styles.selectMenuList}>
+          <ul className={cx(styles.selectMenuList, { [styles.selectMenuListOpen]: isSelectMenuOpen })}>
             {MENU_TITLES.map((menu) => (
               <li
-                role='menuitem'
+                aria-selected
+                role='option'
                 key={`${menu.id}-${menu.title}`}
                 onClick={() => {
                   handleMenuSelect(menu.title)

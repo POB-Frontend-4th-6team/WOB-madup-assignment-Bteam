@@ -77,7 +77,7 @@ const CalendarModal = ({ setIsModalOpen }: IProps) => {
           maxDate={new Date('2022-04-20')}
           showPreview={false}
           showDateDisplay={false}
-          monthDisplayFormat='yyyy년 m월'
+          monthDisplayFormat='yyyy년 MM월'
           rangeColors={['#586cf5']}
         />
       </section>
@@ -85,7 +85,7 @@ const CalendarModal = ({ setIsModalOpen }: IProps) => {
       <div className={styles.buttonContainer}>
         <Button
           text='닫기'
-          width='100px'
+          width='80px'
           height='40px'
           border='1px solid #94a2ad'
           color='black'
@@ -94,7 +94,7 @@ const CalendarModal = ({ setIsModalOpen }: IProps) => {
         />
         <Button
           text='적용'
-          width='100px'
+          width='80px'
           height='40px'
           backgroundColor='#586cf5'
           color='white'
