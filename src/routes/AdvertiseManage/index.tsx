@@ -69,13 +69,7 @@ const AdvertiseManage = (): JSX.Element => {
       </header>
       <Container>
         <header className={styles.containerHeader}>
-          <DropDown
-            selectName='adsStatus'
-            size='medium'
-            selectList={SELECT_LIST}
-            setCurrentSelect={setCurrentSelect}
-            currentSelect={currentSelect}
-          />
+          <DropDown selectName='adsStatus' size='medium' selectList={SELECT_LIST} setCurrentSelect={setCurrentSelect} />
 
           <button type='button' className={styles.headerButton} onClick={handleOpenModal}>
             광고 만들기

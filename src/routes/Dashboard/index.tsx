@@ -41,7 +41,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
+    <>
       <header className={styles.header}>
         <h2>대시보드</h2>
         <div className={styles.calendarContainer}>
@@ -58,12 +58,12 @@ const Dashboard = () => {
       </header>
       <main className={styles.main}>
         <AdStatus />
-        <div className={styles.currentStatusOfMediumSectionWrapper}>
-          <h2 className={styles.currentStatusOfMediumTitle}>매체 현황</h2>
+        <section className={styles.currentStatusOfMediumSectionWrapper}>
+          <h3 className={styles.currentStatusOfMediumTitle}>매체 현황</h3>
           <CurrentStatusOfMedium />
-        </div>
+        </section>
       </main>
-    </div>
+    </>
   )
 }
 export default Dashboard

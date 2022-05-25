@@ -1,4 +1,4 @@
-import styles from './CurrentStatusOfMedium.module.scss'
+import styles from './currentStatusOfMedium.module.scss'
 import { useRecoilState } from 'recoil'
 import { byChannelDataResultState } from 'states/dashboard'
 import Recharts from './Recharts'

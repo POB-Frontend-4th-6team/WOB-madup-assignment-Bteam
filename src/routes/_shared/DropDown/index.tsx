@@ -1,20 +1,23 @@
 import store from 'store'
-import { DownArrow } from 'assets/svgs'
+import { Dispatch, MouseEvent, SetStateAction, useEffect, useState } from 'react'
+
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
-import { Dispatch, MouseEvent, SetStateAction, useState } from 'react'
+
+import { DownArrow } from 'assets/svgs'
 import { cx } from 'styles'
 import styles from './dropDown.module.scss'
 
 interface IDropDownProps {
   selectName: string
   selectList: string[]
-  currentSelect: string
   setCurrentSelect: Dispatch<SetStateAction<string>>
   size: 'large' | 'medium' | 'small'
 }
 
-const DropDown = ({ selectName, selectList, currentSelect, setCurrentSelect, size }: IDropDownProps): JSX.Element => {
+const DropDown = ({ selectName, selectList, setCurrentSelect, size }: IDropDownProps): JSX.Element => {
   const [isOpenSelect, setIsOpenSelect] = useState(false)
+  const [isCategorySelect, setIsCategorySelect] = useState(false)
+  const [categoryColor, setCategoryColor] = useState('')
 
   const displayedItem = store.get(selectName)
 
@@ -38,9 +41,24 @@ const DropDown = ({ selectName, selectList, currentSelect, setCurrentSelect, siz
   }
   const dropDownRef = useOnClickOutside(handleOnClose)
 
+  useEffect(() => {
+    if (selectName === 'firstCategory' || selectName === 'secondCategory') {
+      setIsCategorySelect(true)
+      if (selectName === 'firstCategory') {
+        setCategoryColor('#4fadf7')
+      }
+      if (selectName === 'secondCategory') {
+        setCategoryColor('#85da47')
+      }
+    }
+  }, [selectName])
+
   return (
     <div className={cx(styles.select, styles[size], { [styles.isOpenSelect]: isOpenSelect })} ref={dropDownRef}>
       <button type='button' className={cx(styles.selected, styles[size])} onClick={handleVisibleOptions}>
+        {isCategorySelect && (
+          <div className={styles.categoryIndicator} style={{ backgroundColor: `${categoryColor}` }} />
+        )}
         {displayedItem}
         <DownArrow className={cx(styles.downArrowIcon, { [styles.selectMenuOpen]: isOpenSelect })} />
       </button>

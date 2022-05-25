@@ -63,13 +63,13 @@ const AdStatus = () => {
   )
 
   return (
-    <div className={styles.adSectionWrapper}>
-      <h2 className={styles.adSectionTitle}>통합 광고 현황</h2>
+    <section className={styles.adSectionWrapper}>
+      <h3 className={styles.adSectionTitle}>통합 광고 현황</h3>
       <div className={styles.boardWrapper}>
         <StatusCard />
         <Chart />
       </div>
-    </div>
+    </section>
   )
 }
 
