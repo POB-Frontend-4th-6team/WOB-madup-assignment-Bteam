@@ -14,15 +14,7 @@ interface IInputFormProps {
   errorText: string
 }
 
-const InputText = ({
-  formTitle,
-  value,
-  onBlur,
-  onChange,
-  reset,
-  hasError,
-  errorText,
-}: IInputFormProps): JSX.Element => {
+const InputText = ({ formTitle, value, onBlur, onChange, reset, hasError, errorText }: IInputFormProps) => {
   const handleResetOnclick = () => {
     reset()
   }

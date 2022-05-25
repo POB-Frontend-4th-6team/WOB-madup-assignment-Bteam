@@ -11,8 +11,8 @@ import { cx } from 'styles'
 import styles from './lnb.module.scss'
 
 const LNB = () => {
-  const [sideMenuOpen, setSideMenuopen] = useRecoil(menuState)
-  const LNBRef = useOnClickOutside(() => setSideMenuopen(false))
+  const [sideMenuOpen, setSideMenuOpen] = useRecoil(menuState)
+  const LNBRef = useOnClickOutside(() => setSideMenuOpen(false))
 
   return (
     <aside ref={LNBRef} className={cx(styles.lnbContainer, { [styles.lnbMobileOpen]: sideMenuOpen })}>
