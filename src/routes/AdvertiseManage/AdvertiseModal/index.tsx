@@ -13,6 +13,7 @@ import { validateBudget, validateTitle } from './validateState'
 import { updateAdvertiseList } from './updateAdvertiseList'
 import { CloseIcon } from 'assets/svgs/index'
 import styles from './advertiseModal.module.scss'
+import { addPutAdsItemAPI } from 'services/ads'
 
 interface IAdsModalProps {
   selectedAdItem: IAdsItem | null
@@ -20,7 +21,7 @@ interface IAdsModalProps {
 }
 
 const AdvertiseModal = ({ selectedAdItem, setVisibleModal }: IAdsModalProps): JSX.Element => {
-  const formTitle = selectedAdItem?.id ? '수정' : '생성'
+  const isAdd = !selectedAdItem?.id
 
   const [advertiseList, setAdvertiseList] = useRecoil(adsListState)
 
@@ -68,11 +69,16 @@ const AdvertiseModal = ({ selectedAdItem, setVisibleModal }: IAdsModalProps): JS
       report: { cost: 0, convValue: 0, roas: 0 },
     }
 
-    setAdvertiseList((prev) => {
-      const newList = updateAdvertiseList({ prevList: prev, tempAdItem })
-      return newList
-    })
-    setVisibleModal(false)
+    addPutAdsItemAPI(tempAdItem, isAdd)
+      .then(() => {
+        setAdvertiseList((prev) => {
+          const newList = updateAdvertiseList({ prevList: prev, tempAdItem })
+          return newList
+        })
+      })
+      .finally(() => {
+        setVisibleModal(false)
+      })
   }
 
   const onCancel = () => {
@@ -85,7 +91,7 @@ const AdvertiseModal = ({ selectedAdItem, setVisibleModal }: IAdsModalProps): JS
   return (
     <Modal onCancel={onCancel}>
       <header className={styles.header}>
-        <h3 className={styles.title}>{formTitle}할 광고 유형을 선택하세요.</h3>
+        <h3 className={styles.title}>{isAdd ? '생성' : '수정'}할 광고 유형을 선택하세요.</h3>
         <button type='button' onClick={onCancel} className={styles.cancelButton}>
           <CloseIcon />
         </button>

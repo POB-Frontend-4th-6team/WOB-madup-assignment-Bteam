@@ -6,15 +6,19 @@ import { menuState } from 'states/adsItem'
 import { useRecoil } from 'hooks/state'
 import { cx } from 'styles'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
+import { NavLink } from 'react-router-dom'
 
 const LNB = () => {
   const [sideMenuOpen, setSideMenuopen] = useRecoil(menuState)
   const LNBRef = useOnClickOutside(() => setSideMenuopen(false))
+
   return (
     <aside ref={LNBRef} className={cx(styles.lnbContainer, { [styles.lnbMobileOpen]: sideMenuOpen })}>
-      <div className={styles.logoContainer}>
-        <LogoIcon className={styles.logoIcon} />
-      </div>
+      <NavLink to='/'>
+        <div className={styles.logoContainer}>
+          <LogoIcon className={styles.logoIcon} />
+        </div>
+      </NavLink>
       <ServiceSelection />
       <NavigationMenu />
       <aside className={styles.linkToUsageGuide}>

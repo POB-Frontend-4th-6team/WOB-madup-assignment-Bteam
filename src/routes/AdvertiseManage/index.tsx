@@ -1,12 +1,10 @@
 import { MouseEvent, useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
 import store from 'store'
 import _ from 'lodash'
 
 import { IAdsItem } from 'types/advertiseManage'
 import { useRecoil } from 'hooks/state'
 import { adsListState } from 'states/adsItem'
-import { getAdsItemList } from 'services/ads'
 
 import ContentCard from './ContentCard'
 import styles from './advertiseManage.module.scss'
@@ -69,13 +67,7 @@ const AdvertiseManage = (): JSX.Element => {
       </header>
       <Container>
         <header className={styles.containerHeader}>
-          <DropDown
-            selectName='adsStatus'
-            size='medium'
-            selectList={SELECT_LIST}
-            setCurrentSelect={setCurrentSelect}
-            currentSelect={currentSelect}
-          />
+          <DropDown selectName='adsStatus' size='medium' selectList={SELECT_LIST} setCurrentSelect={setCurrentSelect} />
 
           <button type='button' className={styles.headerButton} onClick={handleOpenModal}>
             광고 만들기

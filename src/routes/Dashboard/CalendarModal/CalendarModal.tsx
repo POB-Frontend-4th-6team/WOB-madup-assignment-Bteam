@@ -60,7 +60,7 @@ const CalendarModal = ({ setIsModalOpen }: IProps) => {
   }
 
   return (
-    <div className={styles.calendarModalContainer}>
+    <aside className={styles.calendarModalContainer}>
       <section className={styles.pickedDateDisplay}>
         {startDateTransformed} ~ {endDateTransformed}
       </section>
@@ -81,8 +81,7 @@ const CalendarModal = ({ setIsModalOpen }: IProps) => {
           rangeColors={['#586cf5']}
         />
       </section>
-
-      <div className={styles.buttonContainer}>
+      <section className={styles.buttonContainer}>
         <Button
           text='닫기'
           width='80px'
@@ -101,8 +100,8 @@ const CalendarModal = ({ setIsModalOpen }: IProps) => {
           borderRadius='10px'
           onClick={handleGetData}
         />
-      </div>
-    </div>
+      </section>
+    </aside>
   )
 }
 

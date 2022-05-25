@@ -13,13 +13,16 @@
   background-color: colors.$WHITE;
   box-shadow: 1px 0 10px colors.$GRAYD;
   transition: all 0.3s linear;
-  @include responsive.mobileOnly {
+}
+
+@include responsive.mobileOnly {
+  .lnbContainer {
     left: -320px;
   }
 }
 
 .lnbMobileOpen {
-  left: 0 !important;
+  left: 0;
 }
 
 .logoContainer {
