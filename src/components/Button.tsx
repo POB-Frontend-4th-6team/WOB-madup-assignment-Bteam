@@ -1,4 +1,5 @@
 interface IButtonProps {
+  type?: 'button' | 'submit'
   text?: string
   width?: string
   height?: string
@@ -9,7 +10,7 @@ interface IButtonProps {
   onClick?: () => void
 }
 
-const Button = ({ text, width, height, border, borderRadius, color, backgroundColor, onClick }: IButtonProps) => {
+const Button = ({ type, text, width, height, border, borderRadius, color, backgroundColor, onClick }: IButtonProps) => {
   const buttonStyles = {
     text,
     width,
@@ -19,8 +20,9 @@ const Button = ({ text, width, height, border, borderRadius, color, backgroundCo
     borderRadius,
     backgroundColor,
   }
+
   return (
-    <button type='button' style={buttonStyles} onClick={onClick}>
+    <button type={type === 'button' ? 'button' : 'submit'} style={buttonStyles} onClick={onClick}>
       {text}
     </button>
   )

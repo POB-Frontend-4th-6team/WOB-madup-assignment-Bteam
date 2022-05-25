@@ -1,13 +1,15 @@
+import { MouseEvent } from 'react'
 import dayjs from 'dayjs'
 import store from 'store'
-import { MouseEvent } from 'react'
+
 import { IAdsItem } from 'types/advertiseManage'
 import { convertCurrencyUnits } from './convertCurrencyUnits'
-import styles from './contentCard.module.scss'
-import { Trash } from 'assets/svgs'
 import { useRecoil } from 'hooks/state'
 import { adsListState } from 'states/adsItem'
 import { deleteAdsItemListAPI } from 'services/ads'
+
+import { Trash } from 'assets/svgs'
+import styles from './contentCard.module.scss'
 
 interface IContentCardProps {
   adsItem: IAdsItem

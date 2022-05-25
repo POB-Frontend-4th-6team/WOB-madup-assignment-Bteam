@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryStack, VictoryTheme, VictoryVoronoiContainer } from 'victory'
+
 import styles from './currentStatusOfMedium.module.scss'
 
 const Recharts = ({ createVictoryBarData }: { createVictoryBarData: Function }) => {

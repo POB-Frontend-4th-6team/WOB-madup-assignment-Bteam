@@ -1,8 +1,10 @@
-import styles from './currentStatusOfMedium.module.scss'
 import { useRecoilState } from 'recoil'
+
 import { byChannelDataResultState } from 'states/dashboard'
+
 import Recharts from './Recharts'
 import Table from './Table'
+import styles from './currentStatusOfMedium.module.scss'
 
 const CurrentStatusOfMedium = () => {
   const [byChannelData] = useRecoilState(byChannelDataResultState)
