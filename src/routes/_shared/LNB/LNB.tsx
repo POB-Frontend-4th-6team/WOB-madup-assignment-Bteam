@@ -11,6 +11,7 @@ import { NavLink } from 'react-router-dom'
 const LNB = () => {
   const [sideMenuOpen, setSideMenuopen] = useRecoil(menuState)
   const LNBRef = useOnClickOutside(() => setSideMenuopen(false))
+
   return (
     <aside ref={LNBRef} className={cx(styles.lnbContainer, { [styles.lnbMobileOpen]: sideMenuOpen })}>
       <NavLink to='/'>

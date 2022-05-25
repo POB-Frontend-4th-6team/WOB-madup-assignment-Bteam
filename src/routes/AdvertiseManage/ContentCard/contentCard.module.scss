@@ -16,15 +16,42 @@
     border: 1px solid rgb(206, 206, 206);
   }
 
-  header {
+  .header {
+    width: 100%;
     padding-bottom: 20px;
-    margin: 10px 0 0;
     border-bottom: 1px solid rgb(237, 239, 241);
+    @include flexbox.flexbox(between, center);
 
-    h3 {
+    div {
       font-size: 16px;
       font-weight: bold;
       color: rgb(58, 71, 78);
+    }
+
+    .trashButton {
+      position: relative;
+      width: auto;
+      height: auto;
+      padding: 0;
+
+      svg {
+        max-width: 15px;
+        height: auto;
+      }
+
+      &:hover {
+        &::after {
+          position: absolute;
+          top: -5px;
+          right: -7px;
+          display: inline-block;
+          width: 30px;
+          height: 30px;
+          content: '';
+          background-color: rgba(184, 184, 184, 28.1%);
+          border-radius: 50px;
+        }
+      }
     }
   }
 
@@ -60,7 +87,7 @@
     }
   }
 
-  button {
+  .updateButton {
     @include flexbox.flexbox;
     box-sizing: border-box;
     width: 90px;

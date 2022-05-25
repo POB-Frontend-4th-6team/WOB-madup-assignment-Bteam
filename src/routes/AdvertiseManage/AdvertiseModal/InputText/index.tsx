@@ -23,7 +23,6 @@ const InputText = ({
   errorText,
 }: IInputFormProps): JSX.Element => {
   const handleResetOnclick = () => {
-    console.log('reset')
     reset()
   }
   return (

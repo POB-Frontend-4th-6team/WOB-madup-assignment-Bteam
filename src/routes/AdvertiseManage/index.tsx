@@ -1,12 +1,10 @@
 import { MouseEvent, useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
 import store from 'store'
 import _ from 'lodash'
 
 import { IAdsItem } from 'types/advertiseManage'
 import { useRecoil } from 'hooks/state'
 import { adsListState } from 'states/adsItem'
-import { getAdsItemList } from 'services/ads'
 
 import ContentCard from './ContentCard'
 import styles from './advertiseManage.module.scss'
