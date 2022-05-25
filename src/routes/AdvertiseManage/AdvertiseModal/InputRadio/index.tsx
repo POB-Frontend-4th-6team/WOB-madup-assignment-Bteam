@@ -1,4 +1,5 @@
 import { MouseEvent } from 'react'
+
 import styles from './inputRadio.module.scss'
 
 interface IInputRadioProps {

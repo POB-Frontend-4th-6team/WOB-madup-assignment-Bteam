@@ -1,7 +1,8 @@
-import { NotifyIcon, ProfileIcon, SettingIcon, MenuBar } from 'assets/svgs'
 import { useRecoil } from 'hooks/state'
 
 import { menuState } from 'states/adsItem'
+
+import { NotifyIcon, ProfileIcon, SettingIcon, MenuBar } from 'assets/svgs'
 import { cx } from 'styles'
 import styles from './header.module.scss'
 

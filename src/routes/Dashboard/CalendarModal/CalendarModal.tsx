@@ -1,16 +1,16 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
-import { DateRange } from 'react-date-range'
+import { DateRange, Range } from 'react-date-range'
 import { ko } from 'date-fns/locale'
 import dayjs from 'dayjs'
 import store from 'store'
 
 import { byChannelFetchState, dailyFetchState } from 'states/dashboard'
 
-import styles from './calendarModal.module.scss'
+import Button from 'components/Button'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
-import Button from 'components/Button'
+import styles from './calendarModal.module.scss'
 
 interface IProps {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
@@ -19,7 +19,7 @@ interface IProps {
 const currentStartDate = store.get('startDate')
 const currentEndDate = store.get('endDate')
 
-if (!currentStartDate && !currentEndDate) {
+if (!currentStartDate || !currentEndDate) {
   store.set('startDate', '2022-04-14')
   store.set('endDate', '2022-04-20')
   store.set('prevEndDate', '2022-04-13')
@@ -29,7 +29,7 @@ if (!currentStartDate && !currentEndDate) {
 const CalendarModal = ({ setIsModalOpen }: IProps) => {
   const [currentCalendarStartDate] = useState(store.get('startDate'))
   const [currentCalenderEndDate] = useState(store.get('endDate'))
-  const [dateRange, setDateRange] = useState<any>([
+  const [dateRange, setDateRange] = useState<Range[]>([
     {
       startDate: new Date(dayjs(currentCalendarStartDate).format('YYYY-MM-DD')),
       endDate: new Date(dayjs(currentCalenderEndDate).format('YYYY-MM-DD')),
@@ -83,6 +83,7 @@ const CalendarModal = ({ setIsModalOpen }: IProps) => {
       </section>
       <section className={styles.buttonContainer}>
         <Button
+          type='button'
           text='닫기'
           width='80px'
           height='40px'
@@ -92,6 +93,7 @@ const CalendarModal = ({ setIsModalOpen }: IProps) => {
           onClick={handleModalClose}
         />
         <Button
+          type='button'
           text='적용'
           width='80px'
           height='40px'
