@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import store from 'store'
 
 import { useRecoilState } from 'hooks/state'
 import { dailyDataResultState } from 'states/dashboard'
@@ -15,10 +16,13 @@ const Chart = (): JSX.Element => {
   const [dailyData] = useRecoilState(dailyDataResultState)
 
   const [firstSelect, setFirstSelect] = useState(SELECT_LIST[0])
-  const [secondSelect, setSecondSelect] = useState(SELECT_LIST[0])
+  const [secondSelect, setSecondSelect] = useState(SELECT_LIST[1])
   const [periodSelect, setPeriodSelect] = useState(PERIOD_SELECT_LIST[0])
 
   const { roas, cost, imp, click, conv, sales } = convertData(dailyData)
+
+  const listForDropDownA = SELECT_LIST.filter((title) => title !== '없음' && title !== secondSelect)
+  const listForDropDownB = SELECT_LIST.filter((title) => title !== firstSelect)
 
   const getData = (dataKey: string) => {
     return (
@@ -42,14 +46,14 @@ const Chart = (): JSX.Element => {
         <div className={styles.dropDownWrapper}>
           <DropDown
             selectName='a'
-            selectList={SELECT_LIST}
+            selectList={listForDropDownA}
             currentSelect={firstSelect}
             setCurrentSelect={setFirstSelect}
             size='small'
           />
           <DropDown
             selectName='b'
-            selectList={SELECT_LIST}
+            selectList={listForDropDownB}
             currentSelect={secondSelect}
             setCurrentSelect={setSecondSelect}
             size='small'

@@ -15,6 +15,7 @@ interface IDropDownProps {
 
 const DropDown = ({ selectName, selectList, currentSelect, setCurrentSelect, size }: IDropDownProps): JSX.Element => {
   const [isOpenSelect, setIsOpenSelect] = useState(false)
+  const [displayedItemDropDownA, setDisplayedItemDropDownB] = useState()
 
   const handleVisibleOptions = () => {
     setIsOpenSelect((prev) => !prev)
