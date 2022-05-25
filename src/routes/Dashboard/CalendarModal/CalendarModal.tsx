@@ -28,10 +28,12 @@ if (!currentStartDate && !currentEndDate) {
 }
 
 const CalendarModal = ({ setIsModalOpen }: IProps) => {
+  const [currentCalendarStartDate, setCurrentCalendarStartDate] = useState(store.get('startDate'))
+  const [currentCalenderEndDate, setCurrentCalendarEndDate] = useState(store.get('endDate'))
   const [dateRange, setDateRange] = useState<any>([
     {
-      startDate: new Date(dayjs(currentStartDate).format('YYYY-MM-DD')),
-      endDate: new Date(dayjs(currentEndDate).format('YYYY-MM-DD')),
+      startDate: new Date(dayjs(currentCalendarStartDate).format('YYYY-MM-DD')),
+      endDate: new Date(dayjs(currentCalenderEndDate).format('YYYY-MM-DD')),
       key: 'selection',
     },
   ])
@@ -68,6 +70,8 @@ const CalendarModal = ({ setIsModalOpen }: IProps) => {
         months={2}
         direction='horizontal'
         dateDisplayFormat='yyyy년 MM월 dd일'
+        minDate={new Date('2022-02-01')}
+        maxDate={new Date('2022-04-20')}
         // showDateDisplay={false}
       />
       <div className={styles.buttonContainer}>

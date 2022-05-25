@@ -12,10 +12,6 @@ import styles from './dashboard.module.scss'
 import CurrentStatusOfMedium from './CurrentStatusOfMedium'
 import { getDailyData, getByChannelData } from 'services/ads'
 
-// TODO 달력 디폴트 날짜 설정
-// const defaultStartDate = dayjs(new Date(2022, 1, 1)).format('YYYY-MM-DD')
-// const defaultEndDate = dayjs(new Date(2022, 1, 2)).format('YYYY-MM-DD')
-
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const currentStartDate = store.get('startDate')
@@ -58,10 +54,6 @@ const Dashboard = () => {
   const handleOpenModal = () => {
     setIsModalOpen(true)
   }
-
-  // 선택하신 기간에 대해서
-  // dailyData: 날짜별 데이터
-  // byChannelData: 채널 별 데이터
 
   return (
     <div>
