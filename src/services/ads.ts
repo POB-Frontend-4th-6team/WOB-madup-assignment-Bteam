@@ -21,7 +21,14 @@ export const addPutAdsItemAPI = (item: IAdsItem, isAdd: boolean) => {
 export const deleteAdsItemListAPI = (id: number) => axios.delete(`${DATA_URL}adlist/${id}`)
 
 export const getDailyData = (currentStartDate: string, currentEndDate: string) => {
-  return axios.get<IDailyData[]>(`${DATA_URL}daily?date_gte=${currentStartDate}&date_lte=${currentEndDate}`)
+  return axios.get<IDailyData[]>(`${DATA_URL}daily?date_gte=${currentStartDate}&date_lte=${currentEndDate}`).then(
+    (value) =>
+      new Promise<AxiosResponse>((resolve) => {
+        setTimeout(() => {
+          resolve(value)
+        }, 500)
+      })
+  )
 }
 
 export const getByChannelData = (currentStartDate: string, currentEndDate: string, setByChannelData: Function) => {

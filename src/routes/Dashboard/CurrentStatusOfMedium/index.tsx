@@ -62,9 +62,9 @@ const CurrentStatusOfMedium = () => {
         </div>
         <div className={styles.tableContainer}>
           <Table
-          combinedAllChannelDataArr={combinedAllChannelDataArr}
-          calculatingSumOfColumns={calculatingSumOfColumns}
-        />
+            combinedAllChannelDataArr={combinedAllChannelDataArr}
+            calculatingSumOfColumns={calculatingSumOfColumns}
+          />
         </div>
       </div>
     </section>

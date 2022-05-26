@@ -10,6 +10,7 @@ import Chart from './Chart'
 import StatusCard from './StatusCard'
 import styles from './adStatus.module.scss'
 import Loading from 'routes/_shared/Loading'
+import { useState } from 'react'
 
 const AdStatus = () => {
   const currentStartDate = store.get('startDate')
@@ -21,22 +22,29 @@ const AdStatus = () => {
   const [dailyFetch, setDailyFetch] = useRecoilState(dailyFetchState)
   const setDailyData = useSetRecoilState(dailyDataResultState)
   const setPrevDailyData = useSetRecoilState(prevDailyDataResultState)
+  const [loading, setLoading] = useState(false)
 
   useMount(() => {
+    setLoading(true)
     getDailyData(currentStartDate, currentEndDate).then((res) => {
       setDailyData(res.data)
     })
-    getDailyData(prevStartDate, prevEndDate).then((res) => {
-      setPrevDailyData(res.data)
-    })
+    getDailyData(prevStartDate, prevEndDate)
+      .then((res) => {
+        setPrevDailyData(res.data)
+      })
+      .finally(() => setLoading(false))
   })
 
   const { isLoading } = useQuery(
     ['getDailyData', currentStartDate, currentEndDate],
     () => {
-      getDailyData(currentStartDate, currentEndDate).then((res) => {
-        setDailyData(res.data)
-      })
+      setLoading(true)
+      getDailyData(currentStartDate, currentEndDate)
+        .then((res) => {
+          setDailyData(res.data)
+        })
+        .finally(() => setLoading(false))
     },
     {
       useErrorBoundary: true,
@@ -51,9 +59,12 @@ const AdStatus = () => {
   useQuery(
     ['getPrevDailyData', prevStartDate, prevEndDate],
     () => {
-      getDailyData(prevStartDate, prevEndDate).then((res) => {
-        setPrevDailyData(res.data)
-      })
+      setLoading(true)
+      getDailyData(prevStartDate, prevEndDate)
+        .then((res) => {
+          setPrevDailyData(res.data)
+        })
+        .finally(() => setLoading(false))
     },
     {
       useErrorBoundary: true,
@@ -69,10 +80,14 @@ const AdStatus = () => {
       <h3 className={styles.adSectionTitle}>통합 광고 현황</h3>
 
       <div className={styles.boardWrapper}>
-        {isLoading && <Loading />}
-
-        <StatusCard />
-        <Chart />
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <StatusCard />
+            <Chart />
+          </>
+        )}
       </div>
     </section>
   )
