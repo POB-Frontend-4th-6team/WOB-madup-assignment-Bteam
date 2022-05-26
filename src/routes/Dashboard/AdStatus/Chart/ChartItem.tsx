@@ -1,4 +1,12 @@
-import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLine, VictoryTheme, VictoryVoronoiContainer } from 'victory'
+import {
+  VictoryAxis,
+  VictoryChart,
+  VictoryLabel,
+  VictoryLine,
+  VictoryTheme,
+  VictoryTooltip,
+  VictoryVoronoiContainer,
+} from 'victory'
 
 import { useRecoilState } from 'hooks/state'
 import { dailyDataResultState } from 'states/dashboard'
@@ -43,7 +51,20 @@ const ChartItem = ({ firstData, secondData }: Props) => {
           theme={VictoryTheme.material}
           {...options}
           domain={{ y: [0, 1] }}
-          containerComponent={<VictoryVoronoiContainer labels={({ datum }) => datum.y} />}
+          containerComponent={
+            <VictoryVoronoiContainer
+              labels={({ datum }) => datum.y}
+              labelComponent={
+                <VictoryTooltip
+                  flyoutStyle={{
+                    stroke: 'lightgray',
+                    fill: 'white',
+                  }}
+                  flyoutPadding={15}
+                />
+              }
+            />
+          }
         >
           <VictoryAxis fixLabelOverlap />
           <VictoryAxis

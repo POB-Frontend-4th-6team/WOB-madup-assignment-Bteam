@@ -27,6 +27,11 @@ export interface IByChannelData {
   roas: number
 }
 
+export interface IVictoryBarData {
+  xAxis: string
+  yAxis: number
+}
+
 export interface ICardContentData {
   title: string
   value: string

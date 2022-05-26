@@ -30,15 +30,15 @@
 
   .confirmButton {
     color: colors.$GRAYD;
-    background-color: colors.$MODAL_BUTTON_BACKGROUND;
+    background-color: colors.$PRIMARY_BUTTON_BACKGROUND;
 
     &:hover {
       color: colors.$GRAYE;
-      background-color: colors.$MODAL_BUTTON_HOVER_BACKGROUND;
+      background-color: colors.$PRIMARY_BUTTON_HOVER_BACKGROUND;
     }
 
     &:active {
-      background-color: colors.$MODAL_BUTTON_ACTIVE_BACKGROUND;
+      background-color: colors.$PRIMARY_BUTTON_ACTIVE_BACKGROUND;
     }
   }
 

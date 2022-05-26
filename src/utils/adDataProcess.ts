@@ -1,4 +1,4 @@
-import { ICardContentData, IDailyData, ISumAdData } from 'types/dashboard'
+import { ICardContentData, IDailyData, ISumAdData, IByChannelData } from 'types/dashboard'
 
 export const dataProcess = (startDate: string, endDate: string, apiData: IDailyData[]) => {
   const sumCost = apiData?.map((item: IDailyData) => item.cost).reduce((acc: number, cur: number) => acc + cur, 0)
@@ -23,6 +23,37 @@ export const dataProcess = (startDate: string, endDate: string, apiData: IDailyD
     sumSales,
     sumRoas,
   }
+}
+
+export const channelDataProcess = (apiData: IByChannelData[], _channel: string) => {
+  const fiteredDataAschannel = apiData?.filter((el: { channel: string }) => el.channel === _channel)
+  const reducedAllDateChannelData = fiteredDataAschannel?.reduce((acc, cur, i) => {
+    if (i === fiteredDataAschannel.length - 1) {
+      return {
+        sales: cur.sales + acc.sales,
+        channel: cur.channel,
+        cost: cur.cost + acc.cost,
+        imp: cur.imp + acc.imp,
+        click: cur.click + acc.click,
+        convValue: cur.convValue + acc.convValue,
+        ctr: (cur.ctr + acc.ctr) / fiteredDataAschannel.length,
+        cpc: (cur.cpc + acc.cpc) / fiteredDataAschannel.length,
+        roas: (cur.roas + acc.roas) / fiteredDataAschannel.length,
+      }
+    }
+    return {
+      sales: cur.sales + acc.sales,
+      channel: cur.channel,
+      cost: cur.cost + acc.cost,
+      imp: cur.imp + acc.imp,
+      click: cur.click + acc.click,
+      convValue: cur.convValue + acc.convValue,
+      ctr: cur.ctr + acc.ctr,
+      cpc: cur.cpc + acc.cpc,
+      roas: cur.roas + acc.roas,
+    }
+  })
+  return reducedAllDateChannelData
 }
 
 export const processCardData = (sumData: ISumAdData, prevSumData: ISumAdData) => {

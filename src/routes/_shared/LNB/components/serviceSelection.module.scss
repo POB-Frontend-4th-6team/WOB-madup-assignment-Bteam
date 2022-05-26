@@ -54,7 +54,7 @@
   }
 
   .addService {
-    color: colors.$MODAL_BUTTON_BACKGROUND;
+    color: colors.$PRIMARY_BUTTON_BACKGROUND;
 
     &:hover {
       background-color: colors.$WHITE;
@@ -63,7 +63,7 @@
 
   .addServiceIcon {
     width: 15px;
-    fill: colors.$MODAL_BUTTON_BACKGROUND;
+    fill: colors.$PRIMARY_BUTTON_BACKGROUND;
   }
 }
 

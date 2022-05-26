@@ -59,7 +59,7 @@ const AdvertiseModal = ({ selectedAdItem, setVisibleModal }: IAdsModalProps) => 
     }
 
     const tempAdItem = {
-      id: selectedAdItem?.id || advertiseList[advertiseList.length - 1].id + 1,
+      id: selectedAdItem?.id || advertiseList[0].id + 1,
       adType,
       title,
       budget: Number(budget),

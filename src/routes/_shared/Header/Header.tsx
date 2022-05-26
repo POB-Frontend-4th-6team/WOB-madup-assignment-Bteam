@@ -1,13 +1,30 @@
-import { useRecoil } from 'hooks/state'
+import { useQuery } from 'react-query'
+import { NavLink } from 'react-router-dom'
+import store from 'store'
 
+import { useRecoil, useRecoilState } from 'hooks/state'
 import { menuState } from 'states/adsItem'
+import { getUserAPI } from 'services/user'
 
 import { NotifyIcon, ProfileIcon, SettingIcon, MenuBar } from 'assets/svgs'
 import { cx } from 'styles'
 import styles from './header.module.scss'
+import { currentUserState } from 'states/user'
+import { useEffect } from 'react'
 
 const Header = () => {
   const [sideMenuOpen, setSideMenuOpen] = useRecoil(menuState)
+  const [user, setUser] = useRecoilState(currentUserState)
+
+  const { data } = useQuery(['profile'], getUserAPI, {
+    onSuccess: (res) => {
+      setUser(res)
+      store.set('user', res)
+    },
+  })
+
+  const name = store.get('user')?.name
+
   const handleOpenMenu = () => {
     setSideMenuOpen((prev) => !prev)
   }
@@ -28,9 +45,11 @@ const Header = () => {
         <SettingIcon className={styles.settingIcon} />
         <div className={styles.profileContainer}>
           <ProfileIcon className={styles.profileIcon} />
-          <button className={styles.userName} type='button'>
-            원티드님
-          </button>
+          <NavLink to='mypage'>
+            <button className={styles.userName} type='button'>
+              <span>{name}</span> 님
+            </button>
+          </NavLink>
         </div>
       </div>
     </header>

@@ -30,7 +30,7 @@ $ASSET_PATH: '/assets/svgs/';
   ul {
     position: absolute;
     top: 45px;
-    display: none;
+    z-index: 4;
     width: 100%;
     height: auto;
     padding-left: 0;

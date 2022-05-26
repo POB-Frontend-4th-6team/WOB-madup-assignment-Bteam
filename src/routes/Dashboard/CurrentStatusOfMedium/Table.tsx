@@ -4,11 +4,11 @@ import { roundToTwo, fomatting } from 'utils/num'
 import styles from './currentStatusOfMedium.module.scss'
 
 const Table = ({
-  reducedAllChannelDataArr,
-  CalculatingSumOfColumns,
+  combinedAllChannelDataArr,
+  calculatingSumOfColumns,
 }: {
-  reducedAllChannelDataArr: IByChannelData[]
-  CalculatingSumOfColumns: Function
+  combinedAllChannelDataArr: IByChannelData[]
+  calculatingSumOfColumns: Function
 }) => {
   return (
     <div className={styles.tableContent}>
@@ -31,7 +31,7 @@ const Table = ({
           </tr>
         </thead>
         <tbody className={styles.tableTbody}>
-          {reducedAllChannelDataArr.map((item) => {
+          {combinedAllChannelDataArr.map((item) => {
             return (
               <tr key={`key ${item.channel}`} data-row-key={`${item.channel}`} className='table-row table-row-level-0'>
                 <td title={`${item.channel}`}>
@@ -51,13 +51,13 @@ const Table = ({
         <tfoot className={styles.tableSummary}>
           <tr>
             <td className={styles.tableCell}>총계</td>
-            <td className={styles.tableCell}>{fomatting(CalculatingSumOfColumns('cost'))}원</td>
-            <td className={styles.tableCell}>{fomatting(Math.round(CalculatingSumOfColumns('sales')))}원</td>
-            <td className={styles.tableCell}>{Math.round(CalculatingSumOfColumns('roas') / 4)}%</td>
-            <td className={styles.tableCell}>{fomatting(CalculatingSumOfColumns('imp'))}</td>
-            <td className={styles.tableCell}>{fomatting(CalculatingSumOfColumns('click'))}</td>
-            <td className={styles.tableCell}>{roundToTwo(CalculatingSumOfColumns('ctr') / 4)}%</td>
-            <td className={styles.tableCell}>{fomatting(Math.round(CalculatingSumOfColumns('cpc') / 4))}원</td>
+            <td className={styles.tableCell}>{fomatting(calculatingSumOfColumns('cost'))}원</td>
+            <td className={styles.tableCell}>{fomatting(Math.round(calculatingSumOfColumns('sales')))}원</td>
+            <td className={styles.tableCell}>{Math.round(calculatingSumOfColumns('roas') / 4)}%</td>
+            <td className={styles.tableCell}>{fomatting(calculatingSumOfColumns('imp'))}</td>
+            <td className={styles.tableCell}>{fomatting(calculatingSumOfColumns('click'))}</td>
+            <td className={styles.tableCell}>{roundToTwo(calculatingSumOfColumns('ctr') / 4)}%</td>
+            <td className={styles.tableCell}>{fomatting(Math.round(calculatingSumOfColumns('cpc') / 4))}원</td>
           </tr>
         </tfoot>
       </table>

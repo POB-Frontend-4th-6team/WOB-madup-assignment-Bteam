@@ -7,25 +7,25 @@
   flex-direction: column;
   min-width: 203px;
   padding: 16px;
-  background-color: #ffffff;
-  border: 1px solid rgb(206, 206, 206);
+  background-color: colors.$WHITE;
+  border: 1px solid colors.$CARD_BORDER;
   border-radius: 10px;
   transition: all 0.3s ease 0s;
 
   &:hover {
-    border: 1px solid rgb(206, 206, 206);
+    border: 1px solid colors.$CARD_BORDER_HOVER;
   }
 
   .header {
     width: 100%;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgb(237, 239, 241);
+    border-bottom: 1px solid colors.$CARD_BODER_BOTTOM;
     @include flexbox.flexbox(between, center);
 
-    div {
+    .title {
       font-size: 16px;
       font-weight: bold;
-      color: rgb(58, 71, 78);
+      color: colors.$GRAY800;
     }
 
     .trashButton {
@@ -66,13 +66,13 @@
       padding: 13px 20px;
       font-size: 12px;
       font-weight: 500;
-      border-bottom: 1px solid rgb(237, 239, 241);
+      border-bottom: 1px solid colors.$CARD_BODER_BOTTOM;
       -webkit-box-align: center;
     }
 
     dt {
       flex: 2 2 10%;
-      color: rgb(148, 162, 173);
+      color: colors.$CARD_SUB_TEXT;
     }
 
     dd {
@@ -81,7 +81,7 @@
       font-size: 12px;
       font-weight: bold;
       line-height: 1.2;
-      color: rgb(51, 51, 51);
+      color: colors.$GRAY2;
       -webkit-box-align: center;
       letter-spacing: 0.6px;
     }
@@ -95,14 +95,14 @@
     padding: 12px 20px;
     margin: 15px 0 10px;
     font-weight: bold;
-    color: rgb(58, 71, 78);
+    color: colors.$GRAY2;
     cursor: pointer;
-    background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(237, 239, 241);
+    background-color: colors.$WHITE;
+    border: 1px solid colors.$CARD_BORDER;
     border-radius: 10px;
 
     &:hover {
-      color: rgb(155, 166, 172);
+      color: colors.$CARD_SUB_TEXT;
     }
   }
 }

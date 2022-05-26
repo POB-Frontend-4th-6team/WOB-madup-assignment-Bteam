@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import { useState } from 'hooks'
+import { useState, useMount } from 'hooks'
 import { useRecoilState, useSetRecoilState } from 'hooks/state'
 import store from 'store'
 
@@ -21,6 +21,11 @@ const Dashboard = () => {
 
   const [byChannelFetch, setByChannelFetch] = useRecoilState(byChannelFetchState)
   const setByChannelData = useSetRecoilState(byChannelDataResultState)
+  const [byChannelData] = useRecoilState(byChannelDataResultState)
+
+  useMount(() => {
+    getByChannelData(currentStartDate, currentEndDate, setByChannelData)
+  })
 
   const { isLoading } = useQuery(
     ['getByChannelData', currentStartDate, currentEndDate],
@@ -62,7 +67,7 @@ const Dashboard = () => {
         {isLoading && <Loading />}
 
         <AdStatus />
-        <CurrentStatusOfMedium />
+        {byChannelData.length > 0 && <CurrentStatusOfMedium />}
       </main>
     </>
   )

@@ -1,6 +1,8 @@
 import { useRecoilState } from 'recoil'
 
 import { byChannelDataResultState } from 'states/dashboard'
+import { IVictoryBarData } from 'types/dashboard'
+import { channelDataProcess } from 'utils/adDataProcess'
 
 import Recharts from './Recharts'
 import Table from './Table'
@@ -9,62 +11,32 @@ import styles from './currentStatusOfMedium.module.scss'
 const CurrentStatusOfMedium = () => {
   const [byChannelData] = useRecoilState(byChannelDataResultState)
 
-  const reduceChannelData = (_channel: string) => {
-    const fiteredData = byChannelData?.filter((el: { channel: string }) => el.channel === _channel)
-    return fiteredData.reduce((acc, cur, i) => {
-      if (i === fiteredData.length - 1) {
-        return {
-          sales: cur.sales + acc.sales,
-          channel: cur.channel,
-          cost: cur.cost + acc.cost,
-          imp: cur.imp + acc.imp,
-          click: cur.click + acc.click,
-          convValue: cur.convValue + acc.convValue,
-          ctr: (cur.ctr + acc.ctr) / fiteredData.length,
-          cpc: (cur.cpc + acc.cpc) / fiteredData.length,
-          roas: (cur.roas + acc.roas) / fiteredData.length,
-        }
-      }
-      return {
-        sales: cur.sales + acc.sales,
-        channel: cur.channel,
-        cost: cur.cost + acc.cost,
-        imp: cur.imp + acc.imp,
-        click: cur.click + acc.click,
-        convValue: cur.convValue + acc.convValue,
-        ctr: cur.ctr + acc.ctr,
-        cpc: cur.cpc + acc.cpc,
-        roas: cur.roas + acc.roas,
-      }
-    })
+  const combinedAllChannelDataObj: any = {
+    google: channelDataProcess(byChannelData, 'google'),
+    naver: channelDataProcess(byChannelData, 'naver'),
+    facebook: channelDataProcess(byChannelData, 'facebook'),
+    kakao: channelDataProcess(byChannelData, 'kakao'),
   }
 
-  const reducedAllChannelDataObj: any = {
-    google: reduceChannelData('google'),
-    naver: reduceChannelData('naver'),
-    facebook: reduceChannelData('facebook'),
-    kakao: reduceChannelData('kakao'),
-  }
-
-  const reducedAllChannelDataArr = [
-    reduceChannelData('google'),
-    reduceChannelData('facebook'),
-    reduceChannelData('naver'),
-    reduceChannelData('kakao'),
+  const combinedAllChannelDataArr = [
+    channelDataProcess(byChannelData, 'google'),
+    channelDataProcess(byChannelData, 'facebook'),
+    channelDataProcess(byChannelData, 'naver'),
+    channelDataProcess(byChannelData, 'kakao'),
   ]
 
   const createVictoryBarData = (channel: string) => {
-    const result = []
-    for (const key in reducedAllChannelDataObj[channel]) {
+    const result: IVictoryBarData[] = []
+    for (const key in combinedAllChannelDataObj[channel]) {
       if (key === 'sales' || key === 'cost' || key === 'imp' || key === 'click' || key === 'convValue')
         result.push({
           xAxis: key,
           yAxis: Math.round(
-            (reducedAllChannelDataObj[channel][key] /
-              (reducedAllChannelDataObj.google[key] +
-                reducedAllChannelDataObj.naver[key] +
-                reducedAllChannelDataObj.facebook[key] +
-                reducedAllChannelDataObj.kakao[key])) *
+            (combinedAllChannelDataObj[channel][key] /
+              (combinedAllChannelDataObj.google[key] +
+                combinedAllChannelDataObj.naver[key] +
+                combinedAllChannelDataObj.facebook[key] +
+                combinedAllChannelDataObj.kakao[key])) *
               100
           ),
         })
@@ -72,14 +44,15 @@ const CurrentStatusOfMedium = () => {
     return result
   }
 
-  const CalculatingSumOfColumns = (column: string) => {
+  const calculatingSumOfColumns = (column: string) => {
     return (
-      reducedAllChannelDataObj.google[column] +
-      reducedAllChannelDataObj.naver[column] +
-      reducedAllChannelDataObj.facebook[column] +
-      reducedAllChannelDataObj.kakao[column]
+      combinedAllChannelDataObj.google[column] +
+      combinedAllChannelDataObj.naver[column] +
+      combinedAllChannelDataObj.facebook[column] +
+      combinedAllChannelDataObj.kakao[column]
     )
   }
+
   return (
     <section className={styles.currentStatusOfMediumSectionWrapper}>
       <h3 className={styles.currentStatusOfMediumTitle}>매체 현황</h3>
@@ -89,9 +62,9 @@ const CurrentStatusOfMedium = () => {
         </div>
         <div className={styles.tableContainer}>
           <Table
-            reducedAllChannelDataArr={reducedAllChannelDataArr}
-            CalculatingSumOfColumns={CalculatingSumOfColumns}
-          />
+          combinedAllChannelDataArr={combinedAllChannelDataArr}
+          calculatingSumOfColumns={calculatingSumOfColumns}
+        />
         </div>
       </div>
     </section>
