@@ -5,18 +5,17 @@ import store from 'store'
 import { useRecoil, useRecoilState } from 'hooks/state'
 import { menuState } from 'states/adsItem'
 import { getUserAPI } from 'services/user'
+import { currentUserState } from 'states/user'
 
 import { NotifyIcon, ProfileIcon, SettingIcon, MenuBar } from 'assets/svgs'
 import { cx } from 'styles'
 import styles from './header.module.scss'
-import { currentUserState } from 'states/user'
-import { useEffect } from 'react'
 
 const Header = () => {
   const [sideMenuOpen, setSideMenuOpen] = useRecoil(menuState)
-  const [user, setUser] = useRecoilState(currentUserState)
+  const [, setUser] = useRecoilState(currentUserState)
 
-  const { data } = useQuery(['profile'], getUserAPI, {
+  useQuery(['profile'], getUserAPI, {
     onSuccess: (res) => {
       setUser(res)
       store.set('user', res)

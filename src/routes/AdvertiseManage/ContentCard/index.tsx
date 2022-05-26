@@ -3,12 +3,14 @@ import store from 'store'
 import { MouseEvent } from 'react'
 
 import { IAdsItem } from 'types/advertiseManage'
-import { convertValue } from './convertValue'
-import styles from './contentCard.module.scss'
-import { Trash } from 'assets/svgs'
 import { useRecoil } from 'hooks/state'
 import { adsListState } from 'states/adsItem'
 import { deleteAdsItemListAPI } from 'services/ads'
+
+import { convertValue } from './convertValue'
+import styles from './contentCard.module.scss'
+import { Trash } from 'assets/svgs'
+
 
 interface IContentCardProps {
   adsItem: IAdsItem
