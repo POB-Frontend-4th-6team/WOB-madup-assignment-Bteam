@@ -17,6 +17,8 @@ const Chart = (): JSX.Element => {
 
   const currentStartDate = store.get('startDate')
   const currentEndDate = store.get('endDate')
+  const currentFirstCategory = store.get('firstCategory') ?? CATEGORY_SELECT_LIST[0]
+  const currentSecondCategory = store.get('secondCategory') ?? CATEGORY_SELECT_LIST[1]
   const currentPeriodSelect = store.get('dayOrWeek')
 
   const [firstSelect, setFirstSelect] = useState(CATEGORY_SELECT_LIST[0])
@@ -30,8 +32,8 @@ const Chart = (): JSX.Element => {
     currentEndDate
   )
 
-  const listForDropDownA = CATEGORY_SELECT_LIST.filter((title) => title !== '없음' && title !== secondSelect)
-  const listForDropDownB = CATEGORY_SELECT_LIST.filter((title) => title !== firstSelect)
+  const listForDropDownA = CATEGORY_SELECT_LIST.filter((title) => title !== '없음' && title !== currentSecondCategory)
+  const listForDropDownB = CATEGORY_SELECT_LIST.filter((title) => title !== currentFirstCategory)
 
   const getDailyData = (dataKey: string) => {
     return (

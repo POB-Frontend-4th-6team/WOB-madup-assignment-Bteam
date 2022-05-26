@@ -36,7 +36,7 @@ const AdStatus = () => {
       .finally(() => setLoading(false))
   })
 
-  const { isLoading } = useQuery(
+  useQuery(
     ['getDailyData', currentStartDate, currentEndDate],
     () => {
       setLoading(true)
