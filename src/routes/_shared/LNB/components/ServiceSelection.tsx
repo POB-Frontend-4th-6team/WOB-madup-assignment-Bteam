@@ -7,7 +7,7 @@ import { DownArrow, PlusIcon } from 'assets/svgs'
 import { cx } from 'styles'
 import styles from './serviceSelection.module.scss'
 
-const MENU_TITLES = store.get('user')?.services
+const MENU_TITLES = store.get('user')?.services || []
 
 const ServiceSelection = () => {
   const [currentServiceTitle, setCurrentServiceTitle] = useState('매드업')
@@ -40,7 +40,7 @@ const ServiceSelection = () => {
         />
         {isDropDownOpen && (
           <ul className={cx(styles.selectMenuList, { [styles.selectMenuListOpen]: isDropDownOpen })}>
-            {MENU_TITLES.map((menu: { id: number; title: string }) => (
+            {MENU_TITLES?.map((menu: { id: number; title: string }) => (
               <li
                 aria-selected
                 role='option'
