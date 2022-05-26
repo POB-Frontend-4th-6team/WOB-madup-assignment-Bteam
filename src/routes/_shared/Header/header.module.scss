@@ -69,4 +69,8 @@
 .userName {
   font-size: 14px;
   color: colors.$GRAY800;
+
+  span {
+    color: colors.$MODAL_BUTTON_BACKGROUND;
+  }
 }

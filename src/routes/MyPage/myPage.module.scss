@@ -1,0 +1,84 @@
+@use '/src/styles/constants/colors';
+
+.header {
+  display: flex;
+  align-items: center;
+  min-width: 900px;
+  height: 80px;
+  margin-right: 40px;
+  margin-left: 40px;
+
+  h2 {
+    font-size: 26px;
+    font-weight: 900;
+  }
+}
+
+.main {
+  display: flex;
+  gap: 30px;
+  min-width: 1000px;
+  height: 100%;
+  padding: 40px;
+  margin: 20px 40px 40px;
+  background-color: colors.$WHITE;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 4%);
+}
+
+.profileImageContainer {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+
+  .profileImage {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.profileDataContainer {
+  width: 50%;
+
+  label {
+    margin-top: 20px;
+    color: colors.$GRAY300;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    width: 300px;
+    height: 40px;
+    padding-left: 20px;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    border: 1px solid colors.$GRAY300;
+    border-radius: 10px;
+  }
+
+  .emailInput {
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+  width: 300px;
+}
+
+.loadingMessage {
+  margin-right: auto;
+  margin-left: 10px;
+  font-size: 14px;
+  color: colors.$GRAY300;
+}
